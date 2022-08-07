@@ -37,6 +37,7 @@ model User {
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
   like      Like[]    @relation(name: "LikeToUser")
+  session   Session?  @relation(name: "sessionToUser")
 
   @@map("user")
 }
@@ -66,4 +67,15 @@ model Like {
   postId    String?
 
   @@map("like")
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  user      User     @relation(name: "sessionToUser", fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @unique
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("session")
 }

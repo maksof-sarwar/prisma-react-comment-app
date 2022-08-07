@@ -6,7 +6,8 @@
 				"./prisma/Comment.prisma",
 				"./prisma/Post.prisma",
 				"./prisma/User.prisma",
-				"./prisma/Like.prisma"
+				"./prisma/Like.prisma",
+				"./prisma/Session.prisma"
 			],
 			"output": "prisma/schema.prisma"
 		}

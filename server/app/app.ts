@@ -1,17 +1,19 @@
-import fastify, { FastifyPluginOptions, FastifyServerOptions } from 'fastify';
+import fastify, { FastifyServerOptions, onRequestHookHandler } from 'fastify';
 import * as dotenv from 'dotenv';
 import sensible from '@fastify/sensible';
 import cors from '@fastify/cors';
 import ajvErrors from 'ajv-errors';
-import router from '@/app/routes';
 import prisma from '@/database/dbInstance';
-import { jwtPlugin, verifyToken } from '@/app/helpers/jwt';
+import router from '@/app/routes';
+import JWT from '@fastify/jwt';
+// Declaration merging
+declare module 'fastify' {
+	export interface FastifyInstance {
+		authenticate: onRequestHookHandler;
+	}
+}
 dotenv.config();
 const option: FastifyServerOptions = {
-	logger: {
-		useLevelLabels: true,
-		level: 'warn',
-	},
 	ajv: {
 		customOptions: {
 			allErrors: true,
@@ -23,16 +25,13 @@ const option: FastifyServerOptions = {
 		},
 		plugins: [ajvErrors],
 	},
-	trustProxy: true,
 };
 const app = fastify(option);
+app.register(JWT, { secret: process.env.JWT_SECRET as string });
 app.register(sensible);
 app.register(cors);
-app.addHook('preValidation', async (request, reply) => {
-	await request.jwtVerify();
-});
 app.register(router, { prefix: '/api' });
-app.register(jwtPlugin);
+
 export const startServer = async () => {
 	try {
 		await prisma.$connect();

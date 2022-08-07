@@ -1,0 +1,14 @@
+model Session {
+  id String @id @default(uuid())
+  user User @relation("sessionToUser",fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+  token String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("session")
+}
+model User{
+  id String @id
+  session Session? @relation("sessionToUser")
+}

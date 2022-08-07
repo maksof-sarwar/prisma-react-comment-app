@@ -3,12 +3,13 @@ import { errorHelper } from '@/app/helpers/apiError';
 import signInSchema from '@/app/schema/signin';
 import signUpSchema from '@/app/schema/signup';
 import { FastifyInstance, FastifyServerOptions } from 'fastify';
-const authController = new AuthController();
+
 const authRoutes = (
 	fastify: FastifyInstance,
 	option: FastifyServerOptions,
 	next: Function
 ) => {
+	const authController = new AuthController();
 	fastify.route({
 		method: 'POST',
 		url: '/sign-up',

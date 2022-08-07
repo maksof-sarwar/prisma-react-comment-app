@@ -5,7 +5,7 @@ const prisma = new PrismaClient({
 });
 async function excludePasswordMiddleware(params, next) {
 	const result = await next(params);
-	if (params?.model === 'User') {
+	if (params?.model === 'User' && !params?.args?.select?.password) {
 		delete result?.password;
 		if (result?.length) result.forEach((r) => delete r?.password);
 	}

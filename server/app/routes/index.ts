@@ -1,12 +1,7 @@
 import { verifyToken } from '@/app/helpers/jwt';
 import authRoutes from '@/app/routes/auth';
 import userRoutes from '@/app/routes/user';
-import {
-	FastifyInstance,
-	FastifyReply,
-	FastifyRequest,
-	FastifyServerOptions,
-} from 'fastify';
+import { FastifyInstance, FastifyServerOptions } from 'fastify';
 import * as _cluster from 'node:cluster';
 const cluster = _cluster as unknown as _cluster.Cluster;
 
@@ -25,6 +20,7 @@ export default function router(
 		}),
 	});
 
+	fastify.decorate('authenticate', verifyToken());
 	fastify.register(authRoutes, { prefix: '/auth' });
 	fastify.register(userRoutes, { prefix: '/user' });
 	next();

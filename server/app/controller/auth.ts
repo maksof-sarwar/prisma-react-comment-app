@@ -1,8 +1,8 @@
 import { generateToken } from '@/app/helpers/jwt';
-import { hashPassword } from '@/app/helpers/password';
+import { hashPassword, matchPassword } from '@/app/helpers/password';
 import prisma from '@/database/dbInstance';
-import { FastifyReply, FastifyRequest } from 'fastify';
-console.log(process.env.JWT_EXPIRY);
+import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+
 export default class AuthController {
 	constructor() {}
 
@@ -24,13 +24,23 @@ export default class AuthController {
 	signIn() {
 		return async (req: FastifyRequest, res: FastifyReply) => {
 			const data = req.body as any;
-			const user = await prisma.user.findUnique({
+			const user = await prisma.user.findUniqueOrThrow({
 				where: { email: data.email },
+				select: { password: true, id: true, email: true },
 			});
-			if (!user) throw res.notFound(`user from ${data.email} not found`);
+			const match = await matchPassword(data.password, user.password);
+			if (!match) throw res.unauthorized(`incorrect password`);
 			const token = await generateToken(user);
+			await prisma.session.upsert({
+				where: {
+					userId: user.id,
+				},
+				create: { token, userId: user.id },
+				update: { token, userId: user.id },
+			});
 			return {
 				token,
+				email: user.email,
 			};
 		};
 	}

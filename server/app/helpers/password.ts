@@ -10,7 +10,10 @@ export async function hashPassword(password) {
 	return await bcrypt.hashSync(password, saltRounds);
 }
 
-export async function matchPassword(plainPassword, hashedPassword) {
+export async function matchPassword(
+	plainPassword: string,
+	hashedPassword: string
+) {
 	if (!plainPassword || !hashedPassword) {
 		const error = TypeError('Password/Hash Should Not Be Empty');
 		throw error;

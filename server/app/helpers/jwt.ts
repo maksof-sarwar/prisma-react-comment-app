@@ -1,10 +1,14 @@
 import app from '@/app/app';
-import { FastifyInstance, FastifyReply } from 'fastify';
+import prisma from '@/database/dbInstance';
+import { FastifyReply } from 'fastify';
 import { FastifyRequest } from 'fastify';
-import fastifyPlugin from 'fastify-plugin';
-import JWT from '@fastify/jwt';
+import { string } from 'yup';
+
+export const getExpireTime = (day: number) => 60 * 60 * 24 * day;
 
 export async function generateToken(payLoad, expiry = undefined) {
+	const expiresIn = (payLoad.expiresIn =
+		expiry || getExpireTime(Number(process.env.JWT_EXPIRY)));
 	const isObject = typeof payLoad === 'object';
 	if (!payLoad) {
 		const error = new TypeError('Token Payload Should Not Be Empty');
@@ -16,23 +20,34 @@ export async function generateToken(payLoad, expiry = undefined) {
 		throw error;
 	}
 
-	return app.jwt.sign(payLoad);
+	return app.jwt.sign(payLoad, { expiresIn });
 }
 
-export async function verifyToken() {
+export function verifyToken() {
 	return async (req: FastifyRequest, res: FastifyReply) => {
 		try {
 			await req.jwtVerify();
+			const token = (
+				(req.headers.authorization || req.headers.Authorization || '') as string
+			)
+				.split('Bearer ')
+				.pop() as string;
+			const user = await prisma.session.findUniqueOrThrow({
+				where: { token },
+				select: {
+					user: {
+						select: {
+							id: true,
+							email: true,
+							name: true,
+							createdAt: true,
+						},
+					},
+				},
+			});
+			req.user = user;
 		} catch (err: any) {
 			res.forbidden(err.message);
 		}
 	};
 }
-
-export const jwtPlugin = fastifyPlugin(
-	(fastify: FastifyInstance, opts, done) => {
-		fastify.register(JWT, { secret: process.env.JWT_SECRET as string });
-		fastify.decorate('authenticate', verifyToken());
-		done();
-	}
-);
