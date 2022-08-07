@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 import sensible from '@fastify/sensible';
 import cors from '@fastify/cors';
 import 'module-alias/register';
-import { router } from '@/app/routes';
+import router from '@/app/routes';
 dotenv.config();
 const app = fastify({ logger: false });
 app.register(sensible);

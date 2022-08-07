@@ -3,7 +3,7 @@ import { FastifyInstance, FastifyServerOptions } from 'fastify';
 import * as _cluster from 'node:cluster';
 const cluster = _cluster as unknown as _cluster.Cluster;
 
-export function router(
+export default function router(
 	fastify: FastifyInstance,
 	option: FastifyServerOptions,
 	next: Function
