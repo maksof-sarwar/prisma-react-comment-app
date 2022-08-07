@@ -1,5 +1,7 @@
 import AuthController from '@/app/controller/auth';
 import { errorHelper } from '@/app/helpers/apiError';
+import signInSchema from '@/app/schema/signin';
+import signUpSchema from '@/app/schema/signup';
 import { FastifyInstance, FastifyServerOptions } from 'fastify';
 const authController = new AuthController();
 const authRoutes = (
@@ -10,8 +12,16 @@ const authRoutes = (
 	fastify.route({
 		method: 'POST',
 		url: '/sign-up',
-		handler: authController.signUp(),
+		schema: signUpSchema,
+		handler: errorHelper(authController.signUp()),
 	});
+	fastify.route({
+		method: 'POST',
+		url: '/sign-in',
+		schema: signInSchema,
+		handler: errorHelper(authController.signIn()),
+	});
+
 	next();
 };
 

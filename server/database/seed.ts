@@ -8,12 +8,14 @@ async function seed() {
 		data: {
 			email: 'rrsarwar109@gmail.com',
 			name: 'Sarwar',
+			password: '123',
 		},
 	});
 	const hamza = await prisma.user.create({
 		data: {
 			name: 'Hamza',
 			email: 'hamza.nh.32.mm@gmail.com',
+			password: '123',
 		},
 	});
 

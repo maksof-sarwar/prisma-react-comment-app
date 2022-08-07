@@ -1,5 +1,12 @@
+import { verifyToken } from '@/app/helpers/jwt';
 import authRoutes from '@/app/routes/auth';
-import { FastifyInstance, FastifyServerOptions } from 'fastify';
+import userRoutes from '@/app/routes/user';
+import {
+	FastifyInstance,
+	FastifyReply,
+	FastifyRequest,
+	FastifyServerOptions,
+} from 'fastify';
 import * as _cluster from 'node:cluster';
 const cluster = _cluster as unknown as _cluster.Cluster;
 
@@ -12,12 +19,13 @@ export default function router(
 	fastify.route({
 		method: 'GET',
 		url: '/health',
-		handler: (req, res) =>
-			res.status(200).send({
-				statusCode: 200,
-				message: `Server is running on PORT ${process.env.PORT} process : ${cluster.worker?.process.pid}`,
-			}),
+		handler: (req, res) => ({
+			statusCode: 200,
+			message: `Server is running on PORT ${process.env.PORT} process : ${cluster.worker?.process.pid}`,
+		}),
 	});
+
 	fastify.register(authRoutes, { prefix: '/auth' });
+	fastify.register(userRoutes, { prefix: '/user' });
 	next();
 }

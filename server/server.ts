@@ -1,20 +1,20 @@
-import fastify from 'fastify';
-import * as dotenv from 'dotenv';
-import sensible from '@fastify/sensible';
-import cors from '@fastify/cors';
-import 'module-alias/register';
-import router from '@/app/routes';
-dotenv.config();
-const app = fastify({ logger: false });
-app.register(sensible);
-app.register(cors);
-app.register(router, { prefix: '/api' });
+import { startServer } from '@/app/app';
+import { cpus } from 'os';
+import * as _cluster from 'node:cluster';
+const cluster = _cluster as unknown as _cluster.Cluster;
+const workers = cpus().length;
+enum ENV {
+	DEV = 'DEVELOPMENT',
+	PROD = 'PRODUCTION',
+}
 
-export const startServer = () => {
-	app.listen({ port: process.env.PORT as any }, (err, address) => {
-		if (err) console.log(err?.message);
-		console.log(`Server is listening on address : ${address}`);
-	});
-};
-
-export default app;
+if (process.env.ENV == ENV.DEV) {
+	startServer();
+} else {
+	if (cluster.isPrimary) {
+		for (let w of new Array(workers)) cluster.fork();
+		cluster.on('exit', cluster.fork);
+	} else {
+		startServer();
+	}
+}
