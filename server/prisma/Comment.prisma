@@ -1,0 +1,27 @@
+model Comment {
+  id String @id @default(uuid())
+  message String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+  children Comment[] @relation("ParentChild")
+  parent Comment? @relation("ParentChild",fields: [parentId], references: [id])
+  parentId String?
+
+
+  @@map("comment")
+}
+
+model User{
+  id String @id
+  comments Comment[]
+}
+model Post{
+  id String @id
+  comments Comment[]
+}
+
