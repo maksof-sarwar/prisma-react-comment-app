@@ -17,4 +17,3 @@ if (process.env.ENV == ENV.DEV) {
 		startServer();
 	}
 }
-export default app;
