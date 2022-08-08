@@ -39,7 +39,10 @@ app.get('/', (req, res) => ({ status: 'OK' }));
 export const startServer = async () => {
 	try {
 		await prisma.$connect();
-		const address = await app.listen({ port: process.env.PORT as any });
+		const address = await app.listen({
+			port: process.env.PORT as any,
+			host: '0.0.0.0',
+		});
 		console.log(`Server is listening on address : ${address}`);
 	} catch (error: any) {
 		console.log(error);
