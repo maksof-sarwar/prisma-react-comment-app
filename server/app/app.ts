@@ -35,6 +35,7 @@ app.register(sensible);
 app.register(cors);
 app.register(fastifySwagger, swaggerOptions);
 app.register(router, { prefix: '/api' });
+app.get('/', (req, res) => ({ status: 'OK' }));
 
 export const startServer = async () => {
 	try {
