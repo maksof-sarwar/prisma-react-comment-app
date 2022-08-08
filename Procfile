@@ -1,1 +1,1 @@
-web: cd server &&  node ./server/build
+web: yarn start
