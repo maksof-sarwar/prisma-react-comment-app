@@ -11,6 +11,10 @@ const routes_1 = require("./routes");
 const jwt_1 = require("@fastify/jwt");
 const swagger_1 = require("./helpers/swagger");
 const swagger_2 = require("@fastify/swagger");
+const compress_1 = require("@fastify/compress");
+const static_1 = require("@fastify/static");
+const path_1 = require("path");
+const FRONTENDFOLDER = 'client';
 dotenv.config();
 const option = {
     ajv: {
@@ -29,9 +33,13 @@ const app = (0, fastify_1.default)(option);
 app.register(jwt_1.default, { secret: process.env.JWT_SECRET });
 app.register(sensible_1.default);
 app.register(cors_1.default);
+app.register(compress_1.default);
 app.register(swagger_2.default, swagger_1.default);
 app.register(routes_1.default, { prefix: '/api' });
-app.get('/', (req, res) => ({ status: 'OK' }));
+app.register(static_1.default, {
+    root: path_1.default.join(__dirname, FRONTENDFOLDER),
+    prefix: '*',
+});
 const startServer = async () => {
     try {
         await dbInstance_1.default.$connect();
@@ -39,7 +47,7 @@ const startServer = async () => {
             port: process.env.PORT,
             host: '0.0.0.0',
         });
-        console.log(`Server is listening on address : ${address}`);
+        console.log(`Server is listening on PORT : ${address.split(':').pop()}`);
     }
     catch (error) {
         console.log(error);

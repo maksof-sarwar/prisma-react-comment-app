@@ -8,9 +8,9 @@ import router from '@/app/routes';
 import JWT from '@fastify/jwt';
 import swaggerOptions from '@/app/helpers/swagger';
 import fastifySwagger from '@fastify/swagger';
-import compression from 'compression';
+import compression from '@fastify/compress';
 import fastifyStatic from '@fastify/static';
-import path from 'path';
+import { join } from 'path';
 const FRONTENDFOLDER = 'client';
 // Declaration merging
 declare module 'fastify' {
@@ -40,8 +40,7 @@ app.register(compression);
 app.register(fastifySwagger, swaggerOptions);
 app.register(router, { prefix: '/api' });
 app.register(fastifyStatic, {
-	root: path.join(__dirname, FRONTENDFOLDER),
-	prefix: '*',
+	root: join(__dirname, FRONTENDFOLDER),
 });
 
 export const startServer = async () => {
