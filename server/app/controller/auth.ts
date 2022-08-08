@@ -14,11 +14,9 @@ export default class AuthController {
 			});
 			if (user) throw res.conflict(`user from ${data.email} already exsist`);
 			data['password'] = await hashPassword(data['password']);
-			return {
-				user: await prisma.user.create({
-					data,
-				}),
-			};
+			return prisma.user.create({
+				data,
+			});
 		};
 	}
 	signIn() {

@@ -6,6 +6,9 @@ import ajvErrors from 'ajv-errors';
 import prisma from '@/database/dbInstance';
 import router from '@/app/routes';
 import JWT from '@fastify/jwt';
+import swaggerOptions from '@/app/helpers/swagger';
+import fastifySwagger from '@fastify/swagger';
+
 // Declaration merging
 declare module 'fastify' {
 	export interface FastifyInstance {
@@ -30,6 +33,7 @@ const app = fastify(option);
 app.register(JWT, { secret: process.env.JWT_SECRET as string });
 app.register(sensible);
 app.register(cors);
+app.register(fastifySwagger, swaggerOptions);
 app.register(router, { prefix: '/api' });
 
 export const startServer = async () => {

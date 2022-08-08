@@ -1,7 +1,7 @@
 import AuthController from '@/app/controller/auth';
 import { errorHelper } from '@/app/helpers/apiError';
-import signInSchema from '@/app/schema/signin';
-import signUpSchema from '@/app/schema/signup';
+import { signInSchema, signUpSchema } from '@/app/schema/auth';
+
 import { FastifyInstance, FastifyServerOptions } from 'fastify';
 
 const authRoutes = (
