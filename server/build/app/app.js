@@ -11,6 +11,7 @@ const routes_1 = require("./routes");
 const jwt_1 = require("@fastify/jwt");
 const swagger_1 = require("./helpers/swagger");
 const swagger_2 = require("@fastify/swagger");
+const proxy_addr_1 = require("@fastify/proxy-addr");
 dotenv.config();
 const option = {
     ajv: {
@@ -30,6 +31,7 @@ app.register(jwt_1.default, { secret: process.env.JWT_SECRET });
 app.register(sensible_1.default);
 app.register(cors_1.default);
 app.register(swagger_2.default, swagger_1.default);
+app.register(proxy_addr_1.default);
 app.register(routes_1.default, { prefix: '/api' });
 app.get('/', (req, res) => ({ status: 'OK' }));
 const startServer = async () => {

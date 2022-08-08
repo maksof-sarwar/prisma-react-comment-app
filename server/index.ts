@@ -7,13 +7,13 @@ enum ENV {
 	DEV = 'DEVELOPMENT',
 	PROD = 'PRODUCTION',
 }
-if (process.env.ENV == ENV.DEV) {
-	startServer();
-} else {
-	if (cluster.isPrimary) {
-		for (let w of new Array(workers)) cluster.fork();
-		cluster.on('exit', cluster.fork);
-	} else {
-		startServer();
-	}
-}
+startServer();
+// if (process.env.ENV == ENV.DEV) {
+// } else {
+// 	if (cluster.isPrimary) {
+// 		for (let w of new Array(workers)) cluster.fork();
+// 		cluster.on('exit', cluster.fork);
+// 	} else {
+// 		startServer();
+// 	}
+// }
