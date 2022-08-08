@@ -3,7 +3,8 @@
 	"version": "1.0.0",
 	"description": "",
 	"scripts": {
-		"start": "cross-env ENV=DEVELOPMENT nodemon -r tsconfig-paths/register --exec ts-node -T index.ts",
+		"start" : "node build",
+		"dev": "cross-env ENV=DEVELOPMENT nodemon -r tsconfig-paths/register --exec ts-node -T index.ts",
 		"prismix": "prismix && prisma format",
 		"dbsync": "prisma db push",
 		"prismastudio": "prisma studio",
