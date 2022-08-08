@@ -14,7 +14,7 @@ const swagger_2 = require("@fastify/swagger");
 const compress_1 = require("@fastify/compress");
 const static_1 = require("@fastify/static");
 const path_1 = require("path");
-const FRONTENDFOLDER = 'client';
+const FRONTENDFOLDER = (0, path_1.join)(process.cwd(), 'client');
 dotenv.config();
 const option = {
     ajv: {
@@ -30,16 +30,14 @@ const option = {
     },
 };
 const app = (0, fastify_1.default)(option);
+app.register(static_1.default, { root: FRONTENDFOLDER });
 app.register(jwt_1.default, { secret: process.env.JWT_SECRET });
 app.register(sensible_1.default);
 app.register(cors_1.default);
 app.register(compress_1.default);
 app.register(swagger_2.default, swagger_1.default);
 app.register(routes_1.default, { prefix: '/api' });
-app.register(static_1.default, {
-    root: path_1.default.join(__dirname, FRONTENDFOLDER),
-    prefix: '*',
-});
+console.log();
 const startServer = async () => {
     try {
         await dbInstance_1.default.$connect();

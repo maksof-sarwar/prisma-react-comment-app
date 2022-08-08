@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const swaggerOptions = {
-    routePrefix: '/doc',
+    routePrefix: '/api/doc',
     mode: 'dynamic',
     openapi: {
         info: {
