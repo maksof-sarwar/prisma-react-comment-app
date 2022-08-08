@@ -1,4 +1,4 @@
-import { startServer } from '@/app/app';
+import app, { startServer } from '@/app/app';
 import { cpus } from 'os';
 import * as _cluster from 'node:cluster';
 const cluster = _cluster as unknown as _cluster.Cluster;
@@ -17,3 +17,5 @@ startServer();
 // 		startServer();
 // 	}
 // }
+
+export default app;
