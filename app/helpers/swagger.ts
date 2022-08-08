@@ -19,7 +19,13 @@ const swaggerOptions: SwaggerOptions = {
 				},
 			},
 		},
-		servers: [{ url: 'http://localhost:9001', description: 'development' }],
+		servers: [
+			{ url: 'http://localhost:9001', description: 'development' },
+			{
+				url: 'https://prisma-react-sarwar.herokuapp.com',
+				description: 'production',
+			},
+		],
 	},
 
 	exposeRoute: true,

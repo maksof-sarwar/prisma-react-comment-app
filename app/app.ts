@@ -43,7 +43,7 @@ export const startServer = async () => {
 			port: process.env.PORT as any,
 			host: '0.0.0.0',
 		});
-		console.log(`Server is listening on address : ${address}`);
+		console.log(`Server is listening on PORT : ${address.split(':').pop()}`);
 	} catch (error: any) {
 		console.log(error);
 		process.exit(1);
