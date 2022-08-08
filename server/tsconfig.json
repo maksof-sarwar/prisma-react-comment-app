@@ -4,22 +4,27 @@
 		"paths": {
 			"@/*": ["./*"]
 		},
-		"declaration": false,
+		"noImplicitAny": false,
+		"noEmitOnError": true,
+		"removeComments": false,
+		"sourceMap": false,
 		"target": "ESNext",
+		"outDir": "build",
+		"module": "CommonJS",
+		"declaration": false,
 		"useDefineForClassFields": true,
-		"allowJs": false,
-		"skipLibCheck": true,
-		"esModuleInterop": false,
 		"noImplicitOverride": false,
 		"allowSyntheticDefaultImports": true,
 		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"module": "CommonJS",
-		"noImplicitAny": false,
+		"allowJs": false,
+		"skipLibCheck": true,
+		"esModuleInterop": false,
 		"moduleResolution": "Node",
+		"rootDir": ".",
+		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"noEmit": true
+		"isolatedModules": true
 	},
-	"exclude": ["./node_modules"]
+	"exclude": ["./node_modules"],
+	"include": ["app/**/*", "server.ts"]
 }

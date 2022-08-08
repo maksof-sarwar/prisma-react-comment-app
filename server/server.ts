@@ -7,7 +7,6 @@ enum ENV {
 	DEV = 'DEVELOPMENT',
 	PROD = 'PRODUCTION',
 }
-
 if (process.env.ENV == ENV.DEV) {
 	startServer();
 } else {

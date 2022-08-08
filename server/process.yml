@@ -1,0 +1,9 @@
+apps:
+  - script: './build/server.js'
+    exec_mode: 'cluster'
+    name: 'prisma-server'
+    autorestart: true
+    instances: max
+    env:
+      PORT: 9001
+      ENV: PRODUCTION
