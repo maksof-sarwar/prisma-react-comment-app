@@ -10,7 +10,7 @@
 		"seed": "ts-node  -T database/seed.ts",
 		"clean:output": "rimraf dist",
 		"build": "cross-env ENV=PRODUCTION yarn clean:output && tsc",
-		"postbuild": "resolve-tspaths"
+		"postbuild": "resolve-tspaths && node build/server.js"
 	},
 	"keywords": [],
 	"author": "",
