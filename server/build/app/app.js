@@ -31,6 +31,7 @@ app.register(sensible_1.default);
 app.register(cors_1.default);
 app.register(swagger_2.default, swagger_1.default);
 app.register(routes_1.default, { prefix: '/api' });
+app.get('/', (req, res) => ({ status: 'OK' }));
 const startServer = async () => {
     try {
         await dbInstance_1.default.$connect();
