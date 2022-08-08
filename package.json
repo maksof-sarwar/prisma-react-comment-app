@@ -2,7 +2,6 @@
 	"name": "client",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
 	"scripts": {
 		"start": "yarn clean:output && parcel ./public/index.html -p 9000 ",
 		"clean:output": "rimraf dist",
