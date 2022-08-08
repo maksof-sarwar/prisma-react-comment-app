@@ -11,7 +11,7 @@ import fastifySwagger from '@fastify/swagger';
 import compression from '@fastify/compress';
 import fastifyStatic from '@fastify/static';
 import { join } from 'path';
-const FRONTENDFOLDER = 'client';
+const FRONTENDFOLDER = join(__dirname, '..', 'client');
 // Declaration merging
 declare module 'fastify' {
 	export interface FastifyInstance {
@@ -33,15 +33,13 @@ const option: FastifyServerOptions = {
 	},
 };
 const app = fastify(option);
+app.register(fastifyStatic, { root: FRONTENDFOLDER });
 app.register(JWT, { secret: process.env.JWT_SECRET as string });
 app.register(sensible);
 app.register(cors);
 app.register(compression);
 app.register(fastifySwagger, swaggerOptions);
 app.register(router, { prefix: '/api' });
-app.register(fastifyStatic, {
-	root: join(__dirname, FRONTENDFOLDER),
-});
 
 export const startServer = async () => {
 	try {

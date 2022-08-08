@@ -2,7 +2,7 @@ import errorResponse from '@/app/schema/error';
 import { SwaggerOptions } from '@fastify/swagger';
 
 const swaggerOptions: SwaggerOptions = {
-	routePrefix: '/doc',
+	routePrefix: '/api/doc',
 	mode: 'dynamic',
 	openapi: {
 		info: {
