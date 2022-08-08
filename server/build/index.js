@@ -10,16 +10,14 @@ var ENV;
     ENV["DEV"] = "DEVELOPMENT";
     ENV["PROD"] = "PRODUCTION";
 })(ENV || (ENV = {}));
-if (process.env.ENV == ENV.DEV) {
-    (0, app_1.startServer)();
-}
-else {
-    if (cluster.isPrimary) {
-        for (let w of new Array(workers))
-            cluster.fork();
-        cluster.on('exit', cluster.fork);
-    }
-    else {
-        (0, app_1.startServer)();
-    }
-}
+(0, app_1.startServer)();
+// if (process.env.ENV == ENV.DEV) {
+// } else {
+// 	if (cluster.isPrimary) {
+// 		for (let w of new Array(workers)) cluster.fork();
+// 		cluster.on('exit', cluster.fork);
+// 	} else {
+// 		startServer();
+// 	}
+// }
+exports.default = app_1.default;
