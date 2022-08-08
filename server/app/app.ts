@@ -8,7 +8,6 @@ import router from '@/app/routes';
 import JWT from '@fastify/jwt';
 import swaggerOptions from '@/app/helpers/swagger';
 import fastifySwagger from '@fastify/swagger';
-import proxyAddr from '@fastify/proxy-addr';
 // Declaration merging
 declare module 'fastify' {
 	export interface FastifyInstance {
@@ -34,7 +33,6 @@ app.register(JWT, { secret: process.env.JWT_SECRET as string });
 app.register(sensible);
 app.register(cors);
 app.register(fastifySwagger, swaggerOptions);
-app.register(proxyAddr);
 app.register(router, { prefix: '/api' });
 app.get('/', (req, res) => ({ status: 'OK' }));
 

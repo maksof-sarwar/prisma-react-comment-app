@@ -23,3 +23,4 @@ else {
         (0, app_1.startServer)();
     }
 }
+exports.default = app_1.default;
