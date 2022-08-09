@@ -1,0 +1,62 @@
+@import "https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap";
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset006pxrgba(0, 0, 0, .3);
+  box-shadow: inset006pxrgba(0, 0, 0, .3);
+}
+
+body::-webkit-scrollbar-thumb {
+  outline: 1pxsolidslategrey;
+  background-color: #a9a9a9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img, a {
+  vertical-align: top;
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.login-side {
+  height: 100vh;
+  justify-content: center;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-side h3 {
+  color: #25408f;
+  font-weight: 750;
+  position: absolute;
+  top: 20%;
+}
+
+.login-side Form {
+  width: 60%;
+  height: 300px;
+  flex-direction: column;
+  display: flex;
+  position: absolute;
+  top: 30%;
+}
+
+.login-side Form .signin-button {
+  transition: all .5s ease-in-out;
+}
+
+.login-side Form .signin-button button {
+  color: #fff;
+  letter-spacing: 1px;
+  cursor: pointer;
+  width: 100%;
+  margin: 8px 0;
+  font-size: 12px;
+}
+
+/*# sourceMappingURL=SignUp.a3238b4e.css.map */
