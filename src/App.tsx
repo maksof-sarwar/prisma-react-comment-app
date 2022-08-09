@@ -19,8 +19,7 @@ export const App: React.FC = () => {
 			setStream(stream);
 			const peerClient = new Peer({
 				host: 'hsi-chat-server.herokuapp.com',
-				// port: 8001,
-				path: '/',
+				path: '/peerjs',
 				secure: true,
 			});
 			setPeerClient(peerClient);
