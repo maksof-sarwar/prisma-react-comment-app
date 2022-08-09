@@ -696,7 +696,7 @@ $RefreshReg$(_c, "SignIn");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"6AEwr","./SignUp.scss":"eCC9H","antd":"6C7kW","@/hooks/useAsync":"6V0Hq","@/services/auth.service":"7NUB9","react-router-dom":"fdOAw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"eCC9H":[function() {},{}],"6C7kW":[function(require,module,exports) {
+},{"react/jsx-runtime":"6AEwr","./SignUp.scss":"eCC9H","antd":"6C7kW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","@/hooks/useAsync":"6V0Hq","@/services/auth.service":"7NUB9","react-router-dom":"fdOAw"}],"eCC9H":[function() {},{}],"6C7kW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Affix", ()=>(0, _affixDefault.default));
@@ -20730,6 +20730,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "useAsync", ()=>useAsync);
 parcelHelpers.export(exports, "useAsyncFn", ()=>useAsyncFn);
+var _antd = require("antd");
 var _react = require("react");
 var _s = $RefreshSig$(), _s1 = $RefreshSig$(), _s2 = $RefreshSig$();
 const useAsync = (func, dependencies = [])=>{
@@ -20768,6 +20769,10 @@ function useAsyncInternal(func, dependencies, initialLoading = false) {
             setError(undefined);
             return data;
         }).catch((error)=>{
+            if (error != "Network Error") (0, _antd.notification).error({
+                message: "Error",
+                description: error
+            });
             setError(error);
             setValue(undefined);
             return Promise.reject(error);
@@ -20791,7 +20796,7 @@ _s2(useAsyncInternal, "tGsoisGMqz+qMRdxhL2eqO6316Y=");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"7NUB9":[function(require,module,exports) {
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","antd":"6C7kW"}],"7NUB9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "signUpApi", ()=>signUpApi);
@@ -20805,10 +20810,15 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "post", ()=>post);
 parcelHelpers.export(exports, "get", ()=>get);
+var _antd = require("antd");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const baseUrl = `https://sarwar-webrtc.herokuapp.com/api/`;
-(0, _axiosDefault.default).interceptors.response.use((response)=>response?.data, (error)=>Promise.reject(error?.response?.data?.message ?? "Error"));
+(0, _axiosDefault.default).interceptors.response.use((response)=>response?.data, (error)=>{
+    const msg = error?.response?.data?.message ?? error.message;
+    (0, _antd.message).error(msg);
+    return Promise.reject(msg);
+});
 function post(endpoint, data, headers = {}) {
     const options = {
         url: baseUrl + endpoint,
@@ -20833,7 +20843,7 @@ function get(endpoint, headers = {}) {
     return (0, _axiosDefault.default)(options);
 }
 
-},{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
+},{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","antd":"6C7kW"}],"jo6P5":[function(require,module,exports) {
 module.exports = require("./lib/axios");
 
 },{"./lib/axios":"63MyY"}],"63MyY":[function(require,module,exports) {

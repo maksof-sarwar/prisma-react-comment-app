@@ -1,8 +1,13 @@
+import { message } from 'antd';
 import axios, { AxiosPromise } from 'axios';
 const baseUrl = `https://sarwar-webrtc.herokuapp.com/api/`;
 axios.interceptors.response.use(
 	(response) => response?.data,
-	(error) => Promise.reject(error?.response?.data?.message ?? 'Error')
+	(error) => {
+		const msg = error?.response?.data?.message ?? error.message;
+		message.error(msg);
+		return Promise.reject(msg);
+	}
 );
 export function post(endpoint, data, headers = {}): AxiosPromise {
 	const options = {

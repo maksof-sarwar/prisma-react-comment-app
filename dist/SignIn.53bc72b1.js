@@ -576,7 +576,6 @@ function SignIn() {
     _s();
     const { loading , execute , error , value  } = (0, _useAsync.useAsyncFn)((0, _authService.signInApi));
     const dispatch = (0, _useReducer.useAppDispatch)();
-    const credential = (0, _useReducer.useAppSelector)((0, _authSlice.selectCredential));
     const navigate = (0, _reactRouterDom.useNavigate)();
     return (0, _jsxRuntime.jsxs)((0, _jsxRuntime.Fragment), {
         children: [
@@ -601,7 +600,6 @@ function SignIn() {
                 children: [
                     (0, _jsxRuntime.jsx)((0, _antd.Form).Item, {
                         name: "email",
-                        hasFeedback: true,
                         label: "Email address",
                         labelCol: {
                             span: 24
@@ -616,7 +614,6 @@ function SignIn() {
                     }),
                     (0, _jsxRuntime.jsx)((0, _antd.Form).Item, {
                         name: "password",
-                        hasFeedback: true,
                         label: "Password",
                         labelCol: {
                             span: 24
@@ -641,7 +638,6 @@ function SignIn() {
                             }),
                             (0, _jsxRuntime.jsx)("a", {
                                 className: "login-form-forgot",
-                                href: "#",
                                 children: "Forgot password?"
                             })
                         ]
@@ -655,20 +651,16 @@ function SignIn() {
                             size: "large",
                             children: "Sign In"
                         })
-                    }),
-                    error ? (0, _jsxRuntime.jsx)("h1", {
-                        children: JSON.stringify(error)
-                    }) : null
+                    })
                 ]
             })
         ]
     });
 }
-_s(SignIn, "Ll7eJGBfWxUEkzt5A9Sqlsw5g+k=", false, function() {
+_s(SignIn, "AQ4b4l4cIVcx7UGAF7n5ZYhHrMI=", false, function() {
     return [
         (0, _useAsync.useAsyncFn),
         (0, _useReducer.useAppDispatch),
-        (0, _useReducer.useAppSelector),
         (0, _reactRouterDom.useNavigate)
     ];
 });
@@ -682,7 +674,7 @@ $RefreshReg$(_c, "SignIn");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"6AEwr","react":"21dqq","./SignIn.scss":"2wanM","antd":"6C7kW","@/hooks/useAsync":"6V0Hq","@/services/auth.service":"7NUB9","@/hooks/useReducer":"gkXFk","@/redux/authSlice":"hpVSM","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"fdOAw"}],"2wanM":[function() {},{}],"6C7kW":[function(require,module,exports) {
+},{"react/jsx-runtime":"6AEwr","react":"21dqq","./SignIn.scss":"2wanM","antd":"6C7kW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"fdOAw","@/hooks/useAsync":"6V0Hq","@/services/auth.service":"7NUB9","@/hooks/useReducer":"gkXFk","@/redux/authSlice":"hpVSM"}],"2wanM":[function() {},{}],"6C7kW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Affix", ()=>(0, _affixDefault.default));
@@ -20716,6 +20708,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "useAsync", ()=>useAsync);
 parcelHelpers.export(exports, "useAsyncFn", ()=>useAsyncFn);
+var _antd = require("antd");
 var _react = require("react");
 var _s = $RefreshSig$(), _s1 = $RefreshSig$(), _s2 = $RefreshSig$();
 const useAsync = (func, dependencies = [])=>{
@@ -20754,6 +20747,10 @@ function useAsyncInternal(func, dependencies, initialLoading = false) {
             setError(undefined);
             return data;
         }).catch((error)=>{
+            if (error != "Network Error") (0, _antd.notification).error({
+                message: "Error",
+                description: error
+            });
             setError(error);
             setValue(undefined);
             return Promise.reject(error);
@@ -20777,7 +20774,7 @@ _s2(useAsyncInternal, "tGsoisGMqz+qMRdxhL2eqO6316Y=");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"7NUB9":[function(require,module,exports) {
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","antd":"6C7kW"}],"7NUB9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "signUpApi", ()=>signUpApi);
@@ -20791,10 +20788,15 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "post", ()=>post);
 parcelHelpers.export(exports, "get", ()=>get);
+var _antd = require("antd");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const baseUrl = `https://sarwar-webrtc.herokuapp.com/api/`;
-(0, _axiosDefault.default).interceptors.response.use((response)=>response?.data, (error)=>Promise.reject(error?.response?.data?.message ?? "Error"));
+(0, _axiosDefault.default).interceptors.response.use((response)=>response?.data, (error)=>{
+    const msg = error?.response?.data?.message ?? error.message;
+    (0, _antd.message).error(msg);
+    return Promise.reject(msg);
+});
 function post(endpoint, data, headers = {}) {
     const options = {
         url: baseUrl + endpoint,
@@ -20819,7 +20821,7 @@ function get(endpoint, headers = {}) {
     return (0, _axiosDefault.default)(options);
 }
 
-},{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
+},{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","antd":"6C7kW"}],"jo6P5":[function(require,module,exports) {
 module.exports = require("./lib/axios");
 
 },{"./lib/axios":"63MyY"}],"63MyY":[function(require,module,exports) {

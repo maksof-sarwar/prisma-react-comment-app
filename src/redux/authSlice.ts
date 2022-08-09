@@ -4,6 +4,7 @@ import {
 	deleteStorage,
 	getStorage,
 	setStorage,
+	STOREAGETYPE,
 } from '@/services/storage.service';
 import { createSlice } from '@reduxjs/toolkit';
 const initialState: { credential: ICredential | null } = {
@@ -15,7 +16,11 @@ const authSlice = createSlice({
 	reducers: {
 		setCredential: (state, action) => {
 			state.credential = action.payload;
-			setStorage('credential', action.payload);
+			setStorage(
+				'credential',
+				action.payload,
+				action.payload.remember ? STOREAGETYPE.LOCAL : STOREAGETYPE.SESSION
+			);
 		},
 		resetCredential: (state) => {
 			state.credential = null;

@@ -11,7 +11,6 @@ import { selectCredential, setCredential } from '@/redux/authSlice';
 function SignIn() {
 	const { loading, execute, error, value } = useAsyncFn(signInApi);
 	const dispatch = useAppDispatch();
-	const credential = useAppSelector(selectCredential);
 	const navigate = useNavigate();
 	return (
 		<>
@@ -34,7 +33,6 @@ function SignIn() {
 					autoComplete='off'>
 					<Form.Item
 						name='email'
-						hasFeedback
 						label='Email address'
 						labelCol={{ span: 24 }}
 						wrapperCol={{ span: 24 }}>
@@ -43,7 +41,6 @@ function SignIn() {
 
 					<Form.Item
 						name='password'
-						hasFeedback
 						label='Password'
 						labelCol={{ span: 24 }}
 						wrapperCol={{ span: 24 }}>
@@ -55,16 +52,13 @@ function SignIn() {
 							<Checkbox>Remember me</Checkbox>
 						</Form.Item>
 
-						<a className='login-form-forgot' href='#'>
-							Forgot password?
-						</a>
+						<a className='login-form-forgot'>Forgot password?</a>
 					</Form.Item>
 					<div className='signin-button'>
 						<Button type='primary' htmlType='submit' shape='round' size='large'>
 							Sign In
 						</Button>
 					</div>
-					{error ? <h1>{JSON.stringify(error)}</h1> : null}
 				</Form>
 			)}
 		</>

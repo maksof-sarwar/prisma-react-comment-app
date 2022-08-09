@@ -1,3 +1,4 @@
+import { notification } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 
 export const useAsync = (func: Function, dependencies: any[] = []) => {
@@ -32,6 +33,8 @@ function useAsyncInternal(
 					return data;
 				})
 				.catch((error) => {
+					if (error != 'Network Error')
+						notification.error({ message: 'Error', description: error });
 					setError(error);
 					setValue(undefined);
 					return Promise.reject(error);

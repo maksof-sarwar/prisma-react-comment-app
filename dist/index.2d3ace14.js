@@ -27270,7 +27270,7 @@ $RefreshReg$(_c, "App");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"6AEwr","react-router-dom":"fdOAw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./Routes":"3Bd9f","@/guard/auth.guard":"3pLZw"}],"fdOAw":[function(require,module,exports) {
+},{"react/jsx-runtime":"6AEwr","react-router-dom":"fdOAw","./Routes":"3Bd9f","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","@/guard/auth.guard":"3pLZw"}],"fdOAw":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MemoryRouter", ()=>(0, _reactRouter.MemoryRouter));
@@ -29062,45 +29062,44 @@ exports.default = route;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","b188662735e62868":"fjmbm","14decb73dce87a1d":"bkKzP","5414bc6a5d7913cb":"ht5OV","a96f37a35a414f16":"9vQiE","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"fjmbm":[function(require,module,exports) {
-module.exports = require("./helpers/browser/js-loader")(require("./helpers/bundle-url").getBundleURL("6EXJA") + "Dashboard.98ed53f4.js" + "?" + Date.now()).catch((err)=>{
-    delete module.bundle.cache[module.id];
-    throw err;
-}).then(()=>module.bundle.root("aMaLu"));
+},{"react":"21dqq","14decb73dce87a1d":"bkKzP","5414bc6a5d7913cb":"ht5OV","a96f37a35a414f16":"9vQiE","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","b188662735e62868":"fjmbm"}],"bkKzP":[function(require,module,exports) {
+module.exports = Promise.all([
+    require("./helpers/browser/css-loader")(require("./helpers/bundle-url").getBundleURL("6EXJA") + "Auth.19dead50.css" + "?" + Date.now()).catch((err)=>{
+        delete module.bundle.cache[module.id];
+        throw err;
+    }),
+    require("./helpers/browser/js-loader")(require("./helpers/bundle-url").getBundleURL("6EXJA") + "Auth.8ce0daab.js" + "?" + Date.now()).catch((err)=>{
+        delete module.bundle.cache[module.id];
+        throw err;
+    })
+]).then(()=>module.bundle.root("4iyke"));
 
-},{"./helpers/browser/js-loader":"61B45","./helpers/bundle-url":"lgJ39"}],"61B45":[function(require,module,exports) {
+},{"./helpers/browser/css-loader":"1MWPE","./helpers/bundle-url":"lgJ39","./helpers/browser/js-loader":"61B45"}],"1MWPE":[function(require,module,exports) {
 "use strict";
 var cacheLoader = require("../cacheLoader");
 module.exports = cacheLoader(function(bundle) {
     return new Promise(function(resolve, reject) {
-        // Don't insert the same script twice (e.g. if it was already in the HTML)
-        var existingScripts = document.getElementsByTagName("script");
-        if ([].concat(existingScripts).some(function isCurrentBundle(script) {
-            return script.src === bundle;
+        // Don't insert the same link element twice (e.g. if it was already in the HTML)
+        var existingLinks = document.getElementsByTagName("link");
+        if ([].concat(existingLinks).some(function isCurrentBundle(link) {
+            return link.href === bundle && link.rel.indexOf("stylesheet") > -1;
         })) {
             resolve();
             return;
         }
-        var preloadLink = document.createElement("link");
-        preloadLink.href = bundle;
-        preloadLink.rel = "preload";
-        preloadLink.as = "script";
-        document.head.appendChild(preloadLink);
-        var script = document.createElement("script");
-        script.async = true;
-        script.type = "text/javascript";
-        script.src = bundle;
-        script.onerror = function(e) {
-            var error = new TypeError("Failed to fetch dynamically imported module: ".concat(bundle, ". Error: ").concat(e.message));
-            script.onerror = script.onload = null;
-            script.remove();
-            reject(error);
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = bundle;
+        link.onerror = function(e) {
+            link.onerror = link.onload = null;
+            link.remove();
+            reject(e);
         };
-        script.onload = function() {
-            script.onerror = script.onload = null;
+        link.onload = function() {
+            link.onerror = link.onload = null;
             resolve();
         };
-        document.getElementsByTagName("head")[0].appendChild(script);
+        document.getElementsByTagName("head")[0].appendChild(link);
     });
 });
 
@@ -29164,44 +29163,39 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"bkKzP":[function(require,module,exports) {
-module.exports = Promise.all([
-    require("./helpers/browser/css-loader")(require("./helpers/bundle-url").getBundleURL("6EXJA") + "Auth.19dead50.css" + "?" + Date.now()).catch((err)=>{
-        delete module.bundle.cache[module.id];
-        throw err;
-    }),
-    require("./helpers/browser/js-loader")(require("./helpers/bundle-url").getBundleURL("6EXJA") + "Auth.8ce0daab.js" + "?" + Date.now()).catch((err)=>{
-        delete module.bundle.cache[module.id];
-        throw err;
-    })
-]).then(()=>module.bundle.root("4iyke"));
-
-},{"./helpers/browser/css-loader":"1MWPE","./helpers/bundle-url":"lgJ39","./helpers/browser/js-loader":"61B45"}],"1MWPE":[function(require,module,exports) {
+},{}],"61B45":[function(require,module,exports) {
 "use strict";
 var cacheLoader = require("../cacheLoader");
 module.exports = cacheLoader(function(bundle) {
     return new Promise(function(resolve, reject) {
-        // Don't insert the same link element twice (e.g. if it was already in the HTML)
-        var existingLinks = document.getElementsByTagName("link");
-        if ([].concat(existingLinks).some(function isCurrentBundle(link) {
-            return link.href === bundle && link.rel.indexOf("stylesheet") > -1;
+        // Don't insert the same script twice (e.g. if it was already in the HTML)
+        var existingScripts = document.getElementsByTagName("script");
+        if ([].concat(existingScripts).some(function isCurrentBundle(script) {
+            return script.src === bundle;
         })) {
             resolve();
             return;
         }
-        var link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = bundle;
-        link.onerror = function(e) {
-            link.onerror = link.onload = null;
-            link.remove();
-            reject(e);
+        var preloadLink = document.createElement("link");
+        preloadLink.href = bundle;
+        preloadLink.rel = "preload";
+        preloadLink.as = "script";
+        document.head.appendChild(preloadLink);
+        var script = document.createElement("script");
+        script.async = true;
+        script.type = "text/javascript";
+        script.src = bundle;
+        script.onerror = function(e) {
+            var error = new TypeError("Failed to fetch dynamically imported module: ".concat(bundle, ". Error: ").concat(e.message));
+            script.onerror = script.onload = null;
+            script.remove();
+            reject(error);
         };
-        link.onload = function() {
-            link.onerror = link.onload = null;
+        script.onload = function() {
+            script.onerror = script.onload = null;
             resolve();
         };
-        document.getElementsByTagName("head")[0].appendChild(link);
+        document.getElementsByTagName("head")[0].appendChild(script);
     });
 });
 
@@ -29229,7 +29223,13 @@ module.exports = Promise.all([
     })
 ]).then(()=>module.bundle.root("cdbDa"));
 
-},{"./helpers/browser/css-loader":"1MWPE","./helpers/bundle-url":"lgJ39","./helpers/browser/js-loader":"61B45"}],"3pLZw":[function(require,module,exports) {
+},{"./helpers/browser/css-loader":"1MWPE","./helpers/bundle-url":"lgJ39","./helpers/browser/js-loader":"61B45"}],"fjmbm":[function(require,module,exports) {
+module.exports = require("./helpers/browser/js-loader")(require("./helpers/bundle-url").getBundleURL("6EXJA") + "Dashboard.98ed53f4.js" + "?" + Date.now()).catch((err)=>{
+    delete module.bundle.cache[module.id];
+    throw err;
+}).then(()=>module.bundle.root("aMaLu"));
+
+},{"./helpers/browser/js-loader":"61B45","./helpers/bundle-url":"lgJ39"}],"3pLZw":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$4a1a = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -29249,7 +29249,6 @@ function AuthGuard({ component: Component , isPrivate  }) {
     const credential = (0, _useReducer.useAppSelector)((0, _authSlice.selectCredential));
     const navigate = (0, _reactRouterDom.useNavigate)();
     (0, _react.useEffect)(()=>{
-        console.log(credential, isPrivate);
         if (!credential && isPrivate) navigate("auth/sign-in");
         else if (credential && !isPrivate) navigate("/");
     }, []);
@@ -31040,7 +31039,7 @@ const authSlice = (0, _toolkit.createSlice)({
     reducers: {
         setCredential: (state, action)=>{
             state.credential = action.payload;
-            (0, _storageService.setStorage)("credential", action.payload);
+            (0, _storageService.setStorage)("credential", action.payload, action.payload.remember ? (0, _storageService.STOREAGETYPE).LOCAL : (0, _storageService.STOREAGETYPE).SESSION);
         },
         resetCredential: (state)=>{
             state.credential = null;
@@ -31052,7 +31051,33 @@ const { resetCredential , setCredential  } = authSlice.actions;
 const selectCredential = (state)=>state.auth.credential;
 exports.default = authSlice.reducer;
 
-},{"@reduxjs/toolkit":"lL1Ef","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@/services/storage.service":"5lLLD"}],"lL1Ef":[function(require,module,exports) {
+},{"@/services/storage.service":"5lLLD","@reduxjs/toolkit":"lL1Ef","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5lLLD":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "STOREAGETYPE", ()=>STOREAGETYPE);
+parcelHelpers.export(exports, "setStorage", ()=>setStorage);
+parcelHelpers.export(exports, "getStorage", ()=>getStorage);
+parcelHelpers.export(exports, "deleteStorage", ()=>deleteStorage);
+parcelHelpers.export(exports, "cleanAllStorage", ()=>cleanAllStorage);
+function setStorage(key, data, type = STOREAGETYPE.LOCAL) {
+    type == STOREAGETYPE.LOCAL ? localStorage.setItem(key, JSON.stringify(data)) : sessionStorage.setItem(key, JSON.stringify(data));
+}
+function getStorage(key, type = STOREAGETYPE.LOCAL) {
+    return type == STOREAGETYPE.LOCAL ? JSON.parse(localStorage.getItem(key)) : JSON.parse(sessionStorage.getItem(key));
+}
+function deleteStorage(key, type = STOREAGETYPE.LOCAL) {
+    type == STOREAGETYPE.LOCAL ? localStorage.removeItem(key) : sessionStorage.removeItem(key);
+}
+function cleanAllStorage(type = STOREAGETYPE.LOCAL) {
+    type == STOREAGETYPE.LOCAL ? localStorage.clear() : sessionStorage.clear();
+}
+var STOREAGETYPE;
+(function(STOREAGETYPE) {
+    STOREAGETYPE["LOCAL"] = "LOCALSTORAGE";
+    STOREAGETYPE["SESSION"] = "SESSIONSTORAGE";
+})(STOREAGETYPE || (STOREAGETYPE = {}));
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lL1Ef":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "MiddlewareArray", ()=>MiddlewareArray);
@@ -34689,32 +34714,6 @@ var thunk = createThunkMiddleware(); // Attach the factory function so users can
 thunk.withExtraArgument = createThunkMiddleware;
 exports.default = thunk;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5lLLD":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "STOREAGETYPE", ()=>STOREAGETYPE);
-parcelHelpers.export(exports, "setStorage", ()=>setStorage);
-parcelHelpers.export(exports, "getStorage", ()=>getStorage);
-parcelHelpers.export(exports, "deleteStorage", ()=>deleteStorage);
-parcelHelpers.export(exports, "cleanAllStorage", ()=>cleanAllStorage);
-function setStorage(key, data, type = STOREAGETYPE.LOCAL) {
-    type == STOREAGETYPE.LOCAL ? localStorage.setItem(key, JSON.stringify(data)) : sessionStorage.setItem(key, JSON.stringify(data));
-}
-function getStorage(key, type = STOREAGETYPE.LOCAL) {
-    return type == STOREAGETYPE.LOCAL ? JSON.parse(localStorage.getItem(key)) : JSON.parse(sessionStorage.getItem(key));
-}
-function deleteStorage(key, type = STOREAGETYPE.LOCAL) {
-    type == STOREAGETYPE.LOCAL ? localStorage.removeItem(key) : sessionStorage.removeItem(key);
-}
-function cleanAllStorage(type = STOREAGETYPE.LOCAL) {
-    type == STOREAGETYPE.LOCAL ? localStorage.clear() : sessionStorage.clear();
-}
-var STOREAGETYPE;
-(function(STOREAGETYPE) {
-    STOREAGETYPE["LOCAL"] = "LOCALSTORAGE";
-    STOREAGETYPE["SESSION"] = "SESSIONSTORAGE";
-})(STOREAGETYPE || (STOREAGETYPE = {}));
-
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"guv6O":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -34738,6 +34737,6 @@ const rootReducer = (0, _toolkit.combineReducers)({
 });
 exports.default = rootReducer;
 
-},{"@reduxjs/toolkit":"lL1Ef","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./authSlice":"hpVSM"}]},["1xC6H","6FqiZ","4aBH6"], "4aBH6", "parcelRequiree8ef")
+},{"@reduxjs/toolkit":"lL1Ef","./authSlice":"hpVSM","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["1xC6H","6FqiZ","4aBH6"], "4aBH6", "parcelRequiree8ef")
 
 //# sourceMappingURL=index.2d3ace14.js.map
