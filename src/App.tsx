@@ -1,6 +1,9 @@
 import { Routes, Route, Link, Navigate } from 'react-router-dom';
 import RouteArray from './Routes';
 import { IRoute } from './models/route.model';
+import AuthGuard from '@/guard/auth.guard';
+import Dashboard from '@/pages/Dashboard';
+
 const App = () => {
 	return (
 		<div>
@@ -12,7 +15,10 @@ const App = () => {
 							path={route.path}
 							element={
 								route.component ? (
-									<route.component />
+									<AuthGuard
+										component={route.component}
+										isPrivate={route.data?.private}
+									/>
 								) : (
 									<Navigate to={route.data.to} />
 								)
@@ -23,7 +29,10 @@ const App = () => {
 										path={rc.path}
 										element={
 											rc.component ? (
-												<rc.component />
+												<AuthGuard
+													component={rc.component}
+													isPrivate={route.data?.private}
+												/>
 											) : (
 												<Navigate to={rc.data.to} />
 											)

@@ -6,9 +6,13 @@ import { useNavigate, useRoutes } from 'react-router-dom';
 import { useAsync, useAsyncFn } from '@/hooks/useAsync';
 import { signInApi } from '@/services/auth.service';
 import { ISignIn } from '@/models/auth.model';
+import { useAppDispatch, useAppSelector } from '@/hooks/useReducer';
+import { selectCredential, setCredential } from '@/redux/authSlice';
 function SignIn() {
 	const { loading, execute, error, value } = useAsyncFn(signInApi);
-
+	const dispatch = useAppDispatch();
+	const credential = useAppSelector(selectCredential);
+	const navigate = useNavigate();
 	return (
 		<>
 			<h3>Sign in</h3>
@@ -22,7 +26,9 @@ function SignIn() {
 					}}
 					onFinish={(value) => {
 						execute(value).then((response) => {
-							console.log(response);
+							response.remember = value.remember;
+							dispatch(setCredential(response));
+							navigate('/');
 						});
 					}}
 					autoComplete='off'>

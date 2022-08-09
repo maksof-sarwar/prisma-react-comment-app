@@ -3,14 +3,14 @@ import { lazy } from 'react';
 const route: IRoute[] = [
 	{
 		path: '/',
-		component: lazy(() => import('./pages/LandingPage')),
-		data: null,
-		name: 'landing-page',
+		component: lazy(() => import('./pages/Dashboard')),
+		data: { private: true },
+		name: 'dashboard',
 	},
 	{
 		path: '/auth',
 		component: lazy(() => import('./pages/Auth')),
-		data: null,
+		data: { private: false },
 		name: 'auth',
 		children: [
 			{
