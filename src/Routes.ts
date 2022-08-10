@@ -8,6 +8,12 @@ const route: IRoute[] = [
 		name: 'dashboard',
 	},
 	{
+		path: '/verify-token/:remember/:token',
+		component: lazy(() => import('./pages/VerifyToken')),
+		data: null,
+		name: 'verify-token',
+	},
+	{
 		path: '/auth',
 		component: lazy(() => import('./pages/Auth')),
 		data: { private: false },

@@ -20738,9 +20738,7 @@ const useAsync = (func, dependencies = [])=>{
     const { execute , ...state } = useAsyncInternal(func, dependencies, true);
     (0, _react.useEffect)(()=>{
         execute();
-    }, [
-        execute
-    ]);
+    }, []);
     return state;
 };
 _s(useAsync, "4ygB3ZC7T49pyInxnr+77FWahd4=", false, function() {
@@ -20796,7 +20794,7 @@ _s2(useAsyncInternal, "tGsoisGMqz+qMRdxhL2eqO6316Y=");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","antd":"6C7kW"}],"7NUB9":[function(require,module,exports) {
+},{"antd":"6C7kW","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"7NUB9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "signUpApi", ()=>signUpApi);
@@ -20805,15 +20803,21 @@ var _appService = require("@/services/App.service");
 const signUpApi = (data)=>(0, _appService.post)(`auth/sign-up`, data);
 const signInApi = (data)=>(0, _appService.post)(`auth/sign-in`, data);
 
-},{"@/services/App.service":"5y0Bb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5y0Bb":[function(require,module,exports) {
+},{"@/services/App.service":"hEn42","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hEn42":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "post", ()=>post);
 parcelHelpers.export(exports, "get", ()=>get);
+var _storageService = require("@/services/storage.service");
 var _antd = require("antd");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const baseUrl = `https://sarwar-webrtc.herokuapp.com/api/`;
+(0, _axiosDefault.default).interceptors.request.use((req)=>{
+    const AuthToken = (0, _storageService.getStorage)("credential")?.token;
+    if (AuthToken) req.headers["Authorization"] = `Bearer ${AuthToken}`;
+    return req;
+});
 (0, _axiosDefault.default).interceptors.response.use((response)=>response?.data, (error)=>{
     const msg = error?.response?.data?.message ?? error.message;
     (0, _antd.message).error(msg);
@@ -20843,7 +20847,7 @@ function get(endpoint, headers = {}) {
     return (0, _axiosDefault.default)(options);
 }
 
-},{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","antd":"6C7kW"}],"jo6P5":[function(require,module,exports) {
+},{"antd":"6C7kW","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@/services/storage.service":"5lLLD"}],"jo6P5":[function(require,module,exports) {
 module.exports = require("./lib/axios");
 
 },{"./lib/axios":"63MyY"}],"63MyY":[function(require,module,exports) {

@@ -6,7 +6,7 @@ export const useAsync = (func: Function, dependencies: any[] = []) => {
 
 	useEffect(() => {
 		execute();
-	}, [execute]);
+	}, []);
 	return state;
 };
 

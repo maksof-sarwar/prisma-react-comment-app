@@ -1,4 +1,4 @@
-import { ICredential } from '@/models/credential.model';
+import { ICredential } from '@/models/user.model';
 import { RootState } from '@/redux/store';
 import {
 	deleteStorage,

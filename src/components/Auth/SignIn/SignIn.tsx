@@ -25,9 +25,8 @@ function SignIn() {
 					}}
 					onFinish={(value) => {
 						execute(value).then((response) => {
-							response.remember = value.remember;
 							dispatch(setCredential(response));
-							navigate('/');
+							navigate(`/verify-token/${value.remember}/${response.token}`);
 						});
 					}}
 					autoComplete='off'>

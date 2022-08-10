@@ -27236,21 +27236,22 @@ const App = ()=>{
     return (0, _jsxRuntime.jsx)("div", {
         children: (0, _jsxRuntime.jsx)((0, _reactRouterDom.Routes), {
             children: (0, _routesDefault.default).map((route, i)=>{
+                console.log(route.path);
                 return (0, _jsxRuntime.jsx)((0, _reactRouterDom.Route), {
                     path: route.path,
-                    element: route.component ? (0, _jsxRuntime.jsx)((0, _authGuardDefault.default), {
+                    element: route.component ? route.data ? (0, _jsxRuntime.jsx)((0, _authGuardDefault.default), {
                         component: route.component,
-                        isPrivate: route.data?.private
-                    }) : (0, _jsxRuntime.jsx)((0, _reactRouterDom.Navigate), {
+                        isPrivate: route.data.private
+                    }) : (0, _jsxRuntime.jsx)(route.component, {}) : (0, _jsxRuntime.jsx)((0, _reactRouterDom.Navigate), {
                         to: route.data.to
                     }),
                     children: route.children?.map((rc, j)=>{
                         return (0, _jsxRuntime.jsx)((0, _reactRouterDom.Route), {
                             path: rc.path,
-                            element: rc.component ? (0, _jsxRuntime.jsx)((0, _authGuardDefault.default), {
+                            element: rc.component ? route.data ? (0, _jsxRuntime.jsx)((0, _authGuardDefault.default), {
                                 component: rc.component,
-                                isPrivate: route.data?.private
-                            }) : (0, _jsxRuntime.jsx)((0, _reactRouterDom.Navigate), {
+                                isPrivate: route.data.private
+                            }) : (0, _jsxRuntime.jsx)(rc.component, {}) : (0, _jsxRuntime.jsx)((0, _reactRouterDom.Navigate), {
                                 to: rc.data.to
                             })
                         }, j);
@@ -29017,6 +29018,12 @@ const route = [
         name: "dashboard"
     },
     {
+        path: "/verify-token/:remember/:token",
+        component: /*#__PURE__*/ (0, _react.lazy)(()=>require("bf094d55c0bd0ac6")),
+        data: null,
+        name: "verify-token"
+    },
+    {
         path: "/auth",
         component: /*#__PURE__*/ (0, _react.lazy)(()=>require("14decb73dce87a1d")),
         data: {
@@ -29062,7 +29069,7 @@ exports.default = route;
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","14decb73dce87a1d":"bkKzP","5414bc6a5d7913cb":"ht5OV","a96f37a35a414f16":"9vQiE","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","b188662735e62868":"fjmbm"}],"bkKzP":[function(require,module,exports) {
+},{"react":"21dqq","14decb73dce87a1d":"bkKzP","5414bc6a5d7913cb":"ht5OV","a96f37a35a414f16":"9vQiE","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","b188662735e62868":"fjmbm","bf094d55c0bd0ac6":"jufFm"}],"bkKzP":[function(require,module,exports) {
 module.exports = Promise.all([
     require("./helpers/browser/css-loader")(require("./helpers/bundle-url").getBundleURL("6EXJA") + "Auth.19dead50.css" + "?" + Date.now()).catch((err)=>{
         delete module.bundle.cache[module.id];
@@ -29229,6 +29236,12 @@ module.exports = require("./helpers/browser/js-loader")(require("./helpers/bundl
     throw err;
 }).then(()=>module.bundle.root("aMaLu"));
 
+},{"./helpers/browser/js-loader":"61B45","./helpers/bundle-url":"lgJ39"}],"jufFm":[function(require,module,exports) {
+module.exports = require("./helpers/browser/js-loader")(require("./helpers/bundle-url").getBundleURL("6EXJA") + "VerifyToken.7e77712c.js" + "?" + Date.now()).catch((err)=>{
+    delete module.bundle.cache[module.id];
+    throw err;
+}).then(()=>module.bundle.root("4CKoQ"));
+
 },{"./helpers/browser/js-loader":"61B45","./helpers/bundle-url":"lgJ39"}],"3pLZw":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$4a1a = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
@@ -29250,7 +29263,7 @@ function AuthGuard({ component: Component , isPrivate  }) {
     const navigate = (0, _reactRouterDom.useNavigate)();
     (0, _react.useEffect)(()=>{
         if (!credential && isPrivate) navigate("auth/sign-in");
-        else if (credential && !isPrivate) navigate("/");
+        else if (credential && !isPrivate) navigate(`/verify-token/${credential?.token}`);
     }, []);
     return (0, _jsxRuntime.jsx)((0, _jsxRuntime.Fragment), {
         children: (0, _jsxRuntime.jsx)(Component, {})

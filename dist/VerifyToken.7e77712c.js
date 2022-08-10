@@ -163,14 +163,14 @@ window.addEventListener("parcelhmraccept", ()=>{
     ErrorOverlay.dismissRuntimeErrors();
 });
 
-},{"react-refresh/runtime":"786KC","react-error-overlay":"1dldy"}],"5TjVw":[function(require,module,exports) {
+},{"react-refresh/runtime":"786KC","react-error-overlay":"1dldy"}],"ita98":[function(require,module,exports) {
 "use strict";
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
-module.bundle.HMR_BUNDLE_ID = "fd2dfe0b53bc72b1";
+module.bundle.HMR_BUNDLE_ID = "bab781a07e77712c";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser, globalThis, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
   HMRAsset,
@@ -552,128 +552,138 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"599fF":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$6f5b = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+},{}],"4CKoQ":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$6c32 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$6f5b.prelude(module);
+$parcel$ReactRefreshHelpers$6c32.prelude(module);
 
 try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxRuntime = require("react/jsx-runtime");
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _signInScss = require("./SignIn.scss");
-var _antd = require("antd");
-var _reactRouterDom = require("react-router-dom");
 var _useAsync = require("@/hooks/useAsync");
-var _authService = require("@/services/auth.service");
 var _useReducer = require("@/hooks/useReducer");
 var _authSlice = require("@/redux/authSlice");
+var _userService = require("@/services/user.service");
+var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
-function SignIn() {
+const VerifyToken = ()=>{
     _s();
-    const { loading , execute , error , value  } = (0, _useAsync.useAsyncFn)((0, _authService.signInApi));
+    const { value , loading , error  } = (0, _useAsync.useAsync)((0, _userService.getProfile));
     const dispatch = (0, _useReducer.useAppDispatch)();
     const navigate = (0, _reactRouterDom.useNavigate)();
-    return (0, _jsxRuntime.jsxs)((0, _jsxRuntime.Fragment), {
-        children: [
-            (0, _jsxRuntime.jsx)("h3", {
-                children: "Sign in"
-            }),
-            loading ? (0, _jsxRuntime.jsx)("h1", {
-                children: "Loading"
-            }) : (0, _jsxRuntime.jsxs)((0, _antd.Form), {
-                name: "signin",
-                initialValues: {
-                    remember: false
-                },
-                onFinish: (value)=>{
-                    execute(value).then((response)=>{
-                        dispatch((0, _authSlice.setCredential)(response));
-                        navigate(`/verify-token/${value.remember}/${response.token}`);
-                    });
-                },
-                autoComplete: "off",
-                children: [
-                    (0, _jsxRuntime.jsx)((0, _antd.Form).Item, {
-                        name: "email",
-                        label: "Email address",
-                        labelCol: {
-                            span: 24
-                        },
-                        wrapperCol: {
-                            span: 24
-                        },
-                        children: (0, _jsxRuntime.jsx)((0, _antd.Input), {
-                            placeholder: "Email",
-                            size: "large"
-                        })
-                    }),
-                    (0, _jsxRuntime.jsx)((0, _antd.Form).Item, {
-                        name: "password",
-                        label: "Password",
-                        labelCol: {
-                            span: 24
-                        },
-                        wrapperCol: {
-                            span: 24
-                        },
-                        children: (0, _jsxRuntime.jsx)((0, _antd.Input).Password, {
-                            placeholder: "Password",
-                            size: "large"
-                        })
-                    }),
-                    (0, _jsxRuntime.jsxs)((0, _antd.Form).Item, {
-                        children: [
-                            (0, _jsxRuntime.jsx)((0, _antd.Form).Item, {
-                                name: "remember",
-                                valuePropName: "checked",
-                                noStyle: true,
-                                children: (0, _jsxRuntime.jsx)((0, _antd.Checkbox), {
-                                    children: "Remember me"
-                                })
-                            }),
-                            (0, _jsxRuntime.jsx)("a", {
-                                className: "login-form-forgot",
-                                children: "Forgot password?"
-                            })
-                        ]
-                    }),
-                    (0, _jsxRuntime.jsx)("div", {
-                        className: "signin-button",
-                        children: (0, _jsxRuntime.jsx)((0, _antd.Button), {
-                            type: "primary",
-                            htmlType: "submit",
-                            shape: "round",
-                            size: "large",
-                            children: "Sign In"
-                        })
-                    })
-                ]
-            })
-        ]
+    const { token , remember  } = (0, _reactRouterDom.useParams)();
+    console.log(token, remember);
+    if (value) {
+        const credential = {
+            token,
+            remember,
+            ...value
+        };
+        dispatch((0, _authSlice.setCredential)(credential));
+        navigate("/");
+    }
+    return (0, _jsxRuntime.jsx)((0, _jsxRuntime.Fragment), {
+        children: (0, _jsxRuntime.jsx)("h1", {
+            children: "Verifying"
+        })
     });
-}
-_s(SignIn, "AQ4b4l4cIVcx7UGAF7n5ZYhHrMI=", false, function() {
+};
+_s(VerifyToken, "y+QEP0gvsW4yGUaPK1KQPYXcedo=", false, function() {
     return [
-        (0, _useAsync.useAsyncFn),
+        (0, _useAsync.useAsync),
         (0, _useReducer.useAppDispatch),
-        (0, _reactRouterDom.useNavigate)
+        (0, _reactRouterDom.useNavigate),
+        (0, _reactRouterDom.useParams)
     ];
 });
-_c = SignIn;
-exports.default = SignIn;
+_c = VerifyToken;
+exports.default = VerifyToken;
 var _c;
-$RefreshReg$(_c, "SignIn");
+$RefreshReg$(_c, "VerifyToken");
 
-  $parcel$ReactRefreshHelpers$6f5b.postlude(module);
+  $parcel$ReactRefreshHelpers$6c32.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"6AEwr","react":"21dqq","./SignIn.scss":"2wanM","antd":"6C7kW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"fdOAw","@/hooks/useAsync":"6V0Hq","@/services/auth.service":"7NUB9","@/hooks/useReducer":"gkXFk","@/redux/authSlice":"hpVSM"}],"2wanM":[function() {},{}],"6C7kW":[function(require,module,exports) {
+},{"react/jsx-runtime":"6AEwr","@/hooks/useReducer":"gkXFk","react-router-dom":"fdOAw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","@/hooks/useAsync":"6V0Hq","@/services/user.service":"3reRt","@/redux/authSlice":"hpVSM"}],"6V0Hq":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$b277 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$b277.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "useAsync", ()=>useAsync);
+parcelHelpers.export(exports, "useAsyncFn", ()=>useAsyncFn);
+var _antd = require("antd");
+var _react = require("react");
+var _s = $RefreshSig$(), _s1 = $RefreshSig$(), _s2 = $RefreshSig$();
+const useAsync = (func, dependencies = [])=>{
+    _s();
+    const { execute , ...state } = useAsyncInternal(func, dependencies, true);
+    (0, _react.useEffect)(()=>{
+        execute();
+    }, []);
+    return state;
+};
+_s(useAsync, "4ygB3ZC7T49pyInxnr+77FWahd4=", false, function() {
+    return [
+        useAsyncInternal
+    ];
+});
+const useAsyncFn = (func, dependencies = [])=>{
+    _s1();
+    return useAsyncInternal(func, dependencies, false);
+};
+_s1(useAsyncFn, "06QlsDzRAzgGL2CRS4Q6GMWaeoQ=", false, function() {
+    return [
+        useAsyncInternal
+    ];
+});
+function useAsyncInternal(func, dependencies, initialLoading = false) {
+    _s2();
+    const [loading, setLoading] = (0, _react.useState)(initialLoading);
+    const [value, setValue] = (0, _react.useState)();
+    const [error, setError] = (0, _react.useState)();
+    const execute = (0, _react.useCallback)((...params)=>{
+        setLoading(true);
+        return func(...params).then((data)=>{
+            setValue(data);
+            setError(undefined);
+            return data;
+        }).catch((error)=>{
+            if (error != "Network Error") (0, _antd.notification).error({
+                message: "Error",
+                description: error
+            });
+            setError(error);
+            setValue(undefined);
+            return Promise.reject(error);
+        }).finally(()=>{
+            setLoading(false);
+        });
+    }, [
+        dependencies
+    ]);
+    return {
+        execute,
+        loading,
+        error,
+        value
+    };
+}
+_s2(useAsyncInternal, "tGsoisGMqz+qMRdxhL2eqO6316Y=");
+
+  $parcel$ReactRefreshHelpers$b277.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"antd":"6C7kW","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"6C7kW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Affix", ()=>(0, _affixDefault.default));
@@ -20696,89 +20706,12 @@ parcelHelpers.defineInteropFlag(exports);
 var _grid = require("../grid");
 exports.default = (0, _grid.Row);
 
-},{"../grid":"2CE2V","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6V0Hq":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$b277 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$b277.prelude(module);
-
-try {
+},{"../grid":"2CE2V","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3reRt":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "useAsync", ()=>useAsync);
-parcelHelpers.export(exports, "useAsyncFn", ()=>useAsyncFn);
-var _antd = require("antd");
-var _react = require("react");
-var _s = $RefreshSig$(), _s1 = $RefreshSig$(), _s2 = $RefreshSig$();
-const useAsync = (func, dependencies = [])=>{
-    _s();
-    const { execute , ...state } = useAsyncInternal(func, dependencies, true);
-    (0, _react.useEffect)(()=>{
-        execute();
-    }, []);
-    return state;
-};
-_s(useAsync, "4ygB3ZC7T49pyInxnr+77FWahd4=", false, function() {
-    return [
-        useAsyncInternal
-    ];
-});
-const useAsyncFn = (func, dependencies = [])=>{
-    _s1();
-    return useAsyncInternal(func, dependencies, false);
-};
-_s1(useAsyncFn, "06QlsDzRAzgGL2CRS4Q6GMWaeoQ=", false, function() {
-    return [
-        useAsyncInternal
-    ];
-});
-function useAsyncInternal(func, dependencies, initialLoading = false) {
-    _s2();
-    const [loading, setLoading] = (0, _react.useState)(initialLoading);
-    const [value, setValue] = (0, _react.useState)();
-    const [error, setError] = (0, _react.useState)();
-    const execute = (0, _react.useCallback)((...params)=>{
-        setLoading(true);
-        return func(...params).then((data)=>{
-            setValue(data);
-            setError(undefined);
-            return data;
-        }).catch((error)=>{
-            if (error != "Network Error") (0, _antd.notification).error({
-                message: "Error",
-                description: error
-            });
-            setError(error);
-            setValue(undefined);
-            return Promise.reject(error);
-        }).finally(()=>{
-            setLoading(false);
-        });
-    }, [
-        dependencies
-    ]);
-    return {
-        execute,
-        loading,
-        error,
-        value
-    };
-}
-_s2(useAsyncInternal, "tGsoisGMqz+qMRdxhL2eqO6316Y=");
-
-  $parcel$ReactRefreshHelpers$b277.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"antd":"6C7kW","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"7NUB9":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "signUpApi", ()=>signUpApi);
-parcelHelpers.export(exports, "signInApi", ()=>signInApi);
+parcelHelpers.export(exports, "getProfile", ()=>getProfile);
 var _appService = require("@/services/App.service");
-const signUpApi = (data)=>(0, _appService.post)(`auth/sign-up`, data);
-const signInApi = (data)=>(0, _appService.post)(`auth/sign-in`, data);
+const getProfile = (data)=>(0, _appService.get)(`user/get-profile`, data);
 
 },{"@/services/App.service":"hEn42","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hEn42":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -24034,6 +23967,6 @@ var utils = require("./../utils");
     return utils.isObject(payload) && payload.isAxiosError === true;
 };
 
-},{"./../utils":"5By4s"}]},["1xC6H","5TjVw"], null, "parcelRequiree8ef")
+},{"./../utils":"5By4s"}]},["1xC6H","ita98"], null, "parcelRequiree8ef")
 
-//# sourceMappingURL=SignIn.53bc72b1.js.map
+//# sourceMappingURL=VerifyToken.7e77712c.js.map

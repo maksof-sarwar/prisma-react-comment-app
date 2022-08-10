@@ -1,6 +1,14 @@
+import { getStorage } from '@/services/storage.service';
 import { message } from 'antd';
 import axios, { AxiosPromise } from 'axios';
 const baseUrl = `https://sarwar-webrtc.herokuapp.com/api/`;
+axios.interceptors.request.use((req) => {
+	const AuthToken: string | null = getStorage('credential')?.token;
+	if (AuthToken) {
+		req.headers!['Authorization'] = `Bearer ${AuthToken}`;
+	}
+	return req;
+});
 axios.interceptors.response.use(
 	(response) => response?.data,
 	(error) => {
