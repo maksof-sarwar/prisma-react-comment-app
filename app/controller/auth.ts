@@ -46,9 +46,21 @@ export default class AuthController {
 	getProfile() {
 		return async (req: FastifyRequest, res: FastifyReply) => {
 			const { token } = req.params as any;
-			const decoded = app.jwt.verify(token);
-			return prisma.user.findFirstOrThrow({
-				where: { id: decoded['id'], deletedAt: null },
+			app.jwt.verify(token);
+			return prisma.session.findFirstOrThrow({
+				where: { token, user: { deletedAt: null } },
+				select: {
+					user: {
+						select: {
+							id: true,
+							email: true,
+							name: true,
+							createdAt: true,
+							updatedAt: true,
+							deletedAt: true,
+						},
+					},
+				},
 			});
 		};
 	}
