@@ -84,3 +84,36 @@ export const signUpSchema: FastifySchema = {
 		default: errorResponse,
 	},
 };
+
+export const getProfileSchema: FastifySchema = {
+	tags: ['Auth'],
+	params: {
+		type: 'object',
+		properties: {
+			token: {
+				type: 'string',
+			},
+		},
+		required: ['token'],
+		errorMessage: {
+			required: {
+				name: '$token is missing',
+			},
+		},
+	},
+	response: {
+		200: {
+			description: 'Successful response',
+			type: 'object',
+			properties: {
+				id: { type: 'string' },
+				name: { type: 'string' },
+				email: { type: 'string' },
+				createdAt: { type: 'string' },
+				updatedAt: { type: 'string' },
+				deletedAt: { type: 'string' },
+			},
+		},
+		default: errorResponse,
+	},
+};

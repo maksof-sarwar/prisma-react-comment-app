@@ -21,22 +21,3 @@ export const userSchema: FastifySchema = {
 		default: errorResponse,
 	},
 };
-
-export const getProfileSchema: FastifySchema = {
-	...base,
-	response: {
-		200: {
-			description: 'Successful response',
-			type: 'object',
-			properties: {
-				id: { type: 'string' },
-				name: { type: 'string' },
-				email: { type: 'string' },
-				createdAt: { type: 'string' },
-				updatedAt: { type: 'string' },
-				deletedAt: { type: 'string' },
-			},
-		},
-		default: errorResponse,
-	},
-};

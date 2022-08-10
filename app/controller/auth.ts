@@ -1,3 +1,4 @@
+import app from '@/app/app';
 import { generateToken } from '@/app/helpers/jwt';
 import { hashPassword, matchPassword } from '@/app/helpers/password';
 import prisma from '@/database/dbInstance';
@@ -40,6 +41,15 @@ export default class AuthController {
 				token,
 				email: user.email,
 			};
+		};
+	}
+	getProfile() {
+		return async (req: FastifyRequest, res: FastifyReply) => {
+			const { token } = req.params as any;
+			const decoded = app.jwt.verify(token);
+			return prisma.user.findFirstOrThrow({
+				where: { id: decoded['id'], deletedAt: null },
+			});
 		};
 	}
 }

@@ -9,11 +9,4 @@ export default class UserController {
 			return prisma.user.findMany({ where: { deletedAt: null } });
 		};
 	}
-	getProfile() {
-		return async (req: FastifyRequest, res: FastifyReply) => {
-			return prisma.user.findFirstOrThrow({
-				where: { id: req.user['id'], deletedAt: null },
-			});
-		};
-	}
 }

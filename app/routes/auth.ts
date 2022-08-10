@@ -1,6 +1,10 @@
 import AuthController from '@/app/controller/auth';
 import { errorHelper } from '@/app/helpers/apiError';
-import { signInSchema, signUpSchema } from '@/app/schema/auth';
+import {
+	getProfileSchema,
+	signInSchema,
+	signUpSchema,
+} from '@/app/schema/auth';
 
 import { FastifyInstance, FastifyServerOptions } from 'fastify';
 
@@ -22,7 +26,12 @@ const authRoutes = (
 		schema: signInSchema,
 		handler: errorHelper(authController.signIn()),
 	});
-
+	fastify.route({
+		method: 'GET',
+		url: '/get-profile/:token',
+		schema: getProfileSchema,
+		handler: errorHelper(authController.getProfile()),
+	});
 	next();
 };
 
