@@ -27236,7 +27236,6 @@ const App = ()=>{
     return (0, _jsxRuntime.jsx)("div", {
         children: (0, _jsxRuntime.jsx)((0, _reactRouterDom.Routes), {
             children: (0, _routesDefault.default).map((route, i)=>{
-                console.log(route.path);
                 return (0, _jsxRuntime.jsx)((0, _reactRouterDom.Route), {
                     path: route.path,
                     element: route.component ? route.data ? (0, _jsxRuntime.jsx)((0, _authGuardDefault.default), {
@@ -29264,7 +29263,9 @@ function AuthGuard({ component: Component , isPrivate  }) {
     (0, _react.useEffect)(()=>{
         if (!credential && isPrivate) navigate("auth/sign-in");
         else if (credential && !isPrivate) navigate(`/verify-token/${credential?.token}`);
-    }, []);
+    }, [
+        credential
+    ]);
     return (0, _jsxRuntime.jsx)((0, _jsxRuntime.Fragment), {
         children: (0, _jsxRuntime.jsx)(Component, {})
     });
@@ -31044,19 +31045,21 @@ parcelHelpers.export(exports, "selectCredential", ()=>selectCredential);
 var _storageService = require("@/services/storage.service");
 var _toolkit = require("@reduxjs/toolkit");
 const initialState = {
-    credential: (0, _storageService.getStorage)("credential") || null
+    credential: (0, _storageService.getStorage)("credential") || (0, _storageService.getStorage)("credential", (0, _storageService.STOREAGETYPE).SESSION) || null
 };
 const authSlice = (0, _toolkit.createSlice)({
     name: "auth",
     initialState,
     reducers: {
         setCredential: (state, action)=>{
+            console.log(action.payload);
             state.credential = action.payload;
             (0, _storageService.setStorage)("credential", action.payload, action.payload.remember ? (0, _storageService.STOREAGETYPE).LOCAL : (0, _storageService.STOREAGETYPE).SESSION);
         },
         resetCredential: (state)=>{
+            const remember = state.credential["remember"];
+            (0, _storageService.deleteStorage)("credential", remember ? (0, _storageService.STOREAGETYPE).LOCAL : (0, _storageService.STOREAGETYPE).SESSION);
             state.credential = null;
-            (0, _storageService.deleteStorage)("credential");
         }
     }
 });

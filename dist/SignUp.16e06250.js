@@ -20799,11 +20799,13 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "signUpApi", ()=>signUpApi);
 parcelHelpers.export(exports, "signInApi", ()=>signInApi);
+parcelHelpers.export(exports, "getProfile", ()=>getProfile);
 var _appService = require("@/services/App.service");
 const signUpApi = (data)=>(0, _appService.post)(`auth/sign-up`, data);
 const signInApi = (data)=>(0, _appService.post)(`auth/sign-in`, data);
+const getProfile = (token)=>(0, _appService.get)(`auth/get-profile/${token}`);
 
-},{"@/services/App.service":"hEn42","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hEn42":[function(require,module,exports) {
+},{"@/services/App.service":"5y0Bb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5y0Bb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "post", ()=>post);
@@ -20819,6 +20821,7 @@ const baseUrl = `https://sarwar-webrtc.herokuapp.com/api/`;
     return req;
 });
 (0, _axiosDefault.default).interceptors.response.use((response)=>response?.data, (error)=>{
+    if (error?.response?.status == 403) window.location.href = "/auth";
     const msg = error?.response?.data?.message ?? error.message;
     (0, _antd.message).error(msg);
     return Promise.reject(msg);
@@ -20847,7 +20850,7 @@ function get(endpoint, headers = {}) {
     return (0, _axiosDefault.default)(options);
 }
 
-},{"antd":"6C7kW","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@/services/storage.service":"5lLLD"}],"jo6P5":[function(require,module,exports) {
+},{"@/services/storage.service":"5lLLD","antd":"6C7kW","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
 module.exports = require("./lib/axios");
 
 },{"./lib/axios":"63MyY"}],"63MyY":[function(require,module,exports) {

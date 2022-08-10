@@ -12,6 +12,9 @@ axios.interceptors.request.use((req) => {
 axios.interceptors.response.use(
 	(response) => response?.data,
 	(error) => {
+		if (error?.response?.status == 403) {
+			window.location.href = '/auth';
+		}
 		const msg = error?.response?.data?.message ?? error.message;
 		message.error(msg);
 		return Promise.reject(msg);

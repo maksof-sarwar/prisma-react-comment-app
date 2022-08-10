@@ -8,7 +8,6 @@ const App = () => {
 		<div>
 			<Routes>
 				{RouteArray.map((route: IRoute, i: number) => {
-					console.log(route.path);
 					return (
 						<Route
 							key={i}

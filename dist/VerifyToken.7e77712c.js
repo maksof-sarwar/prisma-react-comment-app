@@ -565,20 +565,22 @@ var _jsxRuntime = require("react/jsx-runtime");
 var _useAsync = require("@/hooks/useAsync");
 var _useReducer = require("@/hooks/useReducer");
 var _authSlice = require("@/redux/authSlice");
-var _userService = require("@/services/user.service");
+var _authService = require("@/services/auth.service");
 var _reactRouterDom = require("react-router-dom");
 var _s = $RefreshSig$();
 const VerifyToken = ()=>{
     _s();
-    const { value , loading , error  } = (0, _useAsync.useAsync)((0, _userService.getProfile));
+    const { token , remember  } = (0, _reactRouterDom.useParams)();
+    const { value , loading , error  } = (0, _useAsync.useAsync)(()=>(0, _authService.getProfile)(token), [
+        token
+    ]);
     const dispatch = (0, _useReducer.useAppDispatch)();
     const navigate = (0, _reactRouterDom.useNavigate)();
-    const { token , remember  } = (0, _reactRouterDom.useParams)();
-    console.log(token, remember);
+    console.log(remember);
     if (value) {
         const credential = {
             token,
-            remember,
+            remember: JSON.parse(remember),
             ...value
         };
         dispatch((0, _authSlice.setCredential)(credential));
@@ -590,12 +592,12 @@ const VerifyToken = ()=>{
         })
     });
 };
-_s(VerifyToken, "y+QEP0gvsW4yGUaPK1KQPYXcedo=", false, function() {
+_s(VerifyToken, "T6/iZJ6ie01r1ETUciNnk6zGc8k=", false, function() {
     return [
+        (0, _reactRouterDom.useParams),
         (0, _useAsync.useAsync),
         (0, _useReducer.useAppDispatch),
-        (0, _reactRouterDom.useNavigate),
-        (0, _reactRouterDom.useParams)
+        (0, _reactRouterDom.useNavigate)
     ];
 });
 _c = VerifyToken;
@@ -608,7 +610,7 @@ $RefreshReg$(_c, "VerifyToken");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"6AEwr","@/hooks/useReducer":"gkXFk","react-router-dom":"fdOAw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","@/hooks/useAsync":"6V0Hq","@/services/user.service":"3reRt","@/redux/authSlice":"hpVSM"}],"6V0Hq":[function(require,module,exports) {
+},{"react/jsx-runtime":"6AEwr","@/hooks/useReducer":"gkXFk","react-router-dom":"fdOAw","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","@/hooks/useAsync":"6V0Hq","@/services/auth.service":"7NUB9","@/redux/authSlice":"hpVSM"}],"6V0Hq":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$b277 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -20706,14 +20708,18 @@ parcelHelpers.defineInteropFlag(exports);
 var _grid = require("../grid");
 exports.default = (0, _grid.Row);
 
-},{"../grid":"2CE2V","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3reRt":[function(require,module,exports) {
+},{"../grid":"2CE2V","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7NUB9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "signUpApi", ()=>signUpApi);
+parcelHelpers.export(exports, "signInApi", ()=>signInApi);
 parcelHelpers.export(exports, "getProfile", ()=>getProfile);
 var _appService = require("@/services/App.service");
-const getProfile = (data)=>(0, _appService.get)(`user/get-profile`, data);
+const signUpApi = (data)=>(0, _appService.post)(`auth/sign-up`, data);
+const signInApi = (data)=>(0, _appService.post)(`auth/sign-in`, data);
+const getProfile = (token)=>(0, _appService.get)(`auth/get-profile/${token}`);
 
-},{"@/services/App.service":"hEn42","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hEn42":[function(require,module,exports) {
+},{"@/services/App.service":"5y0Bb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5y0Bb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "post", ()=>post);
@@ -20729,6 +20735,7 @@ const baseUrl = `https://sarwar-webrtc.herokuapp.com/api/`;
     return req;
 });
 (0, _axiosDefault.default).interceptors.response.use((response)=>response?.data, (error)=>{
+    if (error?.response?.status == 403) window.location.href = "/auth";
     const msg = error?.response?.data?.message ?? error.message;
     (0, _antd.message).error(msg);
     return Promise.reject(msg);
@@ -20757,7 +20764,7 @@ function get(endpoint, headers = {}) {
     return (0, _axiosDefault.default)(options);
 }
 
-},{"antd":"6C7kW","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@/services/storage.service":"5lLLD"}],"jo6P5":[function(require,module,exports) {
+},{"@/services/storage.service":"5lLLD","antd":"6C7kW","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
 module.exports = require("./lib/axios");
 
 },{"./lib/axios":"63MyY"}],"63MyY":[function(require,module,exports) {

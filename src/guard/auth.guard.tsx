@@ -14,7 +14,7 @@ function AuthGuard({ component: Component, isPrivate }) {
 		} else if (credential && !isPrivate) {
 			navigate(`/verify-token/${credential?.token}`);
 		}
-	}, []);
+	}, [credential]);
 
 	return (
 		<>

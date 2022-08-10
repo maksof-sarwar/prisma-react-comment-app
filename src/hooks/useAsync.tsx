@@ -10,7 +10,7 @@ export const useAsync = (func: Function, dependencies: any[] = []) => {
 	return state;
 };
 
-export const useAsyncFn = (func: Function, dependencies = []) => {
+export const useAsyncFn = (func: Function, dependencies: any[] = []) => {
 	return useAsyncInternal(func, dependencies, false);
 };
 

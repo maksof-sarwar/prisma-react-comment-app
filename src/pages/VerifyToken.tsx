@@ -1,19 +1,22 @@
-import { useAsync } from '@/hooks/useAsync';
+import { useAsync, useAsyncFn } from '@/hooks/useAsync';
 import { useAppDispatch } from '@/hooks/useReducer';
 import { setCredential } from '@/redux/authSlice';
-import { getProfile } from '@/services/user.service';
+import { getProfile } from '@/services/auth.service';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const VerifyToken = () => {
-	const { value, loading, error } = useAsync(getProfile);
+	const { token, remember } = useParams();
+	const { value, loading, error } = useAsync(
+		() => getProfile(token!),
+		[token!]
+	);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const { token, remember } = useParams();
-	console.log(token, remember);
+	console.log(remember);
 	if (value) {
 		const credential = {
 			token,
-			remember,
+			remember: JSON.parse(remember!),
 			...(value as object),
 		};
 		dispatch(setCredential(credential));

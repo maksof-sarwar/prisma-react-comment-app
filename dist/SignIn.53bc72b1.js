@@ -570,7 +570,6 @@ var _reactRouterDom = require("react-router-dom");
 var _useAsync = require("@/hooks/useAsync");
 var _authService = require("@/services/auth.service");
 var _useReducer = require("@/hooks/useReducer");
-var _authSlice = require("@/redux/authSlice");
 var _s = $RefreshSig$();
 function SignIn() {
     _s();
@@ -591,7 +590,6 @@ function SignIn() {
                 },
                 onFinish: (value)=>{
                     execute(value).then((response)=>{
-                        dispatch((0, _authSlice.setCredential)(response));
                         navigate(`/verify-token/${value.remember}/${response.token}`);
                     });
                 },
@@ -673,7 +671,7 @@ $RefreshReg$(_c, "SignIn");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-runtime":"6AEwr","react":"21dqq","./SignIn.scss":"2wanM","antd":"6C7kW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"fdOAw","@/hooks/useAsync":"6V0Hq","@/services/auth.service":"7NUB9","@/hooks/useReducer":"gkXFk","@/redux/authSlice":"hpVSM"}],"2wanM":[function() {},{}],"6C7kW":[function(require,module,exports) {
+},{"react/jsx-runtime":"6AEwr","react":"21dqq","./SignIn.scss":"2wanM","antd":"6C7kW","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"fdOAw","@/hooks/useAsync":"6V0Hq","@/services/auth.service":"7NUB9","@/hooks/useReducer":"gkXFk"}],"2wanM":[function() {},{}],"6C7kW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Affix", ()=>(0, _affixDefault.default));
@@ -20776,11 +20774,13 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "signUpApi", ()=>signUpApi);
 parcelHelpers.export(exports, "signInApi", ()=>signInApi);
+parcelHelpers.export(exports, "getProfile", ()=>getProfile);
 var _appService = require("@/services/App.service");
 const signUpApi = (data)=>(0, _appService.post)(`auth/sign-up`, data);
 const signInApi = (data)=>(0, _appService.post)(`auth/sign-in`, data);
+const getProfile = (token)=>(0, _appService.get)(`auth/get-profile/${token}`);
 
-},{"@/services/App.service":"hEn42","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hEn42":[function(require,module,exports) {
+},{"@/services/App.service":"5y0Bb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5y0Bb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "post", ()=>post);
@@ -20796,6 +20796,7 @@ const baseUrl = `https://sarwar-webrtc.herokuapp.com/api/`;
     return req;
 });
 (0, _axiosDefault.default).interceptors.response.use((response)=>response?.data, (error)=>{
+    if (error?.response?.status == 403) window.location.href = "/auth";
     const msg = error?.response?.data?.message ?? error.message;
     (0, _antd.message).error(msg);
     return Promise.reject(msg);
@@ -20824,7 +20825,7 @@ function get(endpoint, headers = {}) {
     return (0, _axiosDefault.default)(options);
 }
 
-},{"antd":"6C7kW","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@/services/storage.service":"5lLLD"}],"jo6P5":[function(require,module,exports) {
+},{"@/services/storage.service":"5lLLD","antd":"6C7kW","axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jo6P5":[function(require,module,exports) {
 module.exports = require("./lib/axios");
 
 },{"./lib/axios":"63MyY"}],"63MyY":[function(require,module,exports) {

@@ -25,7 +25,6 @@ function SignIn() {
 					}}
 					onFinish={(value) => {
 						execute(value).then((response) => {
-							dispatch(setCredential(response));
 							navigate(`/verify-token/${value.remember}/${response.token}`);
 						});
 					}}

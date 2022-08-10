@@ -8,4 +8,5 @@ export interface IUser {
 }
 export interface ICredential extends IUser {
 	token: string;
+	remember: boolean;
 }
