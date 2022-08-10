@@ -32,8 +32,8 @@ export function verifyToken() {
 			)
 				.split('Bearer ')
 				.pop() as string;
-			const user = await prisma.session.findUniqueOrThrow({
-				where: { token },
+			const { user } = await prisma.session.findFirstOrThrow({
+				where: { token, user: { deletedAt: null } },
 				select: {
 					user: {
 						select: {
@@ -41,6 +41,8 @@ export function verifyToken() {
 							email: true,
 							name: true,
 							createdAt: true,
+							updatedAt: true,
+							deletedAt: true,
 						},
 					},
 				},

@@ -1,6 +1,6 @@
 import UserController from '@/app/controller/user';
 import { errorHelper } from '@/app/helpers/apiError';
-import { userSchema } from '@/app/schema/user';
+import { getProfileSchema, userSchema } from '@/app/schema/user';
 import { FastifyInstance, FastifyServerOptions } from 'fastify';
 const userRoutes = (
 	fastify: FastifyInstance,
@@ -8,14 +8,19 @@ const userRoutes = (
 	next: Function
 ) => {
 	const userController = new UserController();
+	fastify.addHook('onRequest', fastify.authenticate);
 	fastify.route({
 		method: 'GET',
-		url: '/',
+		url: '',
 		schema: userSchema,
-		onRequest: [fastify.authenticate],
 		handler: errorHelper(userController.getAllUser()),
 	});
-
+	fastify.route({
+		method: 'GET',
+		url: '/get-profile',
+		schema: getProfileSchema,
+		handler: errorHelper(userController.getProfile()),
+	});
 	next();
 };
 

@@ -11,5 +11,6 @@ async function excludePasswordMiddleware(params, next) {
 	}
 	return result;
 }
+
 prisma.$use(excludePasswordMiddleware);
 export default prisma;

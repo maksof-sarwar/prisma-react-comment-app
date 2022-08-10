@@ -9,8 +9,8 @@ export default class AuthController {
 	signUp() {
 		return async (req: FastifyRequest, res: FastifyReply) => {
 			const data = req.body as any;
-			const user = await prisma.user.findUnique({
-				where: { email: data.email },
+			const user = await prisma.user.findFirst({
+				where: { email: data.email, deletedAt: null },
 			});
 			if (user) throw res.conflict(`user from ${data.email} already exsist`);
 			data['password'] = await hashPassword(data['password']);
@@ -22,8 +22,8 @@ export default class AuthController {
 	signIn() {
 		return async (req: FastifyRequest, res: FastifyReply) => {
 			const data = req.body as any;
-			const user = await prisma.user.findUniqueOrThrow({
-				where: { email: data.email },
+			const user = await prisma.user.findFirstOrThrow({
+				where: { email: data.email, deletedAt: null },
 				select: { password: true, id: true, email: true },
 			});
 			const match = await matchPassword(data.password, user.password);

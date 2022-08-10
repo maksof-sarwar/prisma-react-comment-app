@@ -20,6 +20,7 @@ declare module 'fastify' {
 }
 dotenv.config();
 const option: FastifyServerOptions = {
+	maxParamLength: 1000,
 	ajv: {
 		customOptions: {
 			allErrors: true,
@@ -40,7 +41,6 @@ app.register(cors);
 app.register(compression);
 app.register(fastifySwagger, swaggerOptions);
 app.register(router, { prefix: '/api' });
-console.log();
 export const startServer = async () => {
 	try {
 		await prisma.$connect();
