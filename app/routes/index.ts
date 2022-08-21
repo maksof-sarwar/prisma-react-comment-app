@@ -1,7 +1,7 @@
 import { verifyToken } from '@/app/helpers/jwt';
-import swagger from '@/app/helpers/swagger';
 import authRoutes from '@/app/routes/auth';
 import userRoutes from '@/app/routes/user';
+import fileUploadRoutes from '@/app/routes/upload';
 import { FastifyInstance, FastifyServerOptions } from 'fastify';
 
 import * as _cluster from 'node:cluster';
@@ -39,8 +39,8 @@ export default function router(
 
 	next();
 	fastify.decorate('authenticate', verifyToken());
-
 	fastify.register(authRoutes, { prefix: '/auth' });
 	fastify.register(userRoutes, { prefix: '/user' });
+	fastify.register(fileUploadRoutes, { prefix: '/file' });
 	next();
 }

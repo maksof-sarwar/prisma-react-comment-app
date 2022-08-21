@@ -10,6 +10,7 @@ import swaggerOptions from '@/app/helpers/swagger';
 import fastifySwagger from '@fastify/swagger';
 import compression from '@fastify/compress';
 import fastifyStatic from '@fastify/static';
+import multer from 'fastify-multer';
 import { join } from 'path';
 const FRONTENDFOLDER = join(process.cwd(), 'client');
 // Declaration merging
@@ -39,6 +40,7 @@ app.register(JWT, { secret: process.env.JWT_SECRET as string });
 app.register(sensible);
 app.register(cors);
 app.register(compression);
+app.register(multer.contentParser);
 app.register(fastifySwagger, swaggerOptions);
 app.register(router, { prefix: '/api' });
 export const startServer = async () => {
