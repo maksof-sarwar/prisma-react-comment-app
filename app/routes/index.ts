@@ -5,6 +5,7 @@ import fileUploadRoutes from '@/app/routes/upload';
 import { FastifyInstance, FastifyServerOptions } from 'fastify';
 
 import * as _cluster from 'node:cluster';
+import { verifyApiKey } from '@/app/helpers/apiSecurity';
 const cluster = _cluster as unknown as _cluster.Cluster;
 
 export default function router(
@@ -36,9 +37,9 @@ export default function router(
 			}`,
 		}),
 	});
-
-	next();
 	fastify.decorate('authenticate', verifyToken());
+	fastify.decorate('verifyApiKey', verifyApiKey());
+	fastify.addHook('onRequest', fastify.verifyApiKey);
 	fastify.register(authRoutes, { prefix: '/auth' });
 	fastify.register(userRoutes, { prefix: '/user' });
 	fastify.register(fileUploadRoutes, { prefix: '/file' });

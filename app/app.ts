@@ -17,6 +17,7 @@ const FRONTENDFOLDER = join(process.cwd(), 'client');
 declare module 'fastify' {
 	export interface FastifyInstance {
 		authenticate: onRequestHookHandler;
+		verifyApiKey: onRequestHookHandler;
 	}
 }
 dotenv.config();
@@ -43,6 +44,7 @@ app.register(compression);
 app.register(multer.contentParser);
 app.register(fastifySwagger, swaggerOptions);
 app.register(router, { prefix: '/api' });
+
 export const startServer = async () => {
 	try {
 		await prisma.$connect();
@@ -52,7 +54,6 @@ export const startServer = async () => {
 		});
 		console.log(`Server is listening on PORT : ${address.split(':').pop()}`);
 	} catch (error: any) {
-		console.log(error);
 		process.exit(1);
 	}
 };

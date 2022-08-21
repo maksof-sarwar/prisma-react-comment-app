@@ -10,12 +10,18 @@ const swaggerOptions: SwaggerOptions = {
 			description: 'Testing the Fastify swagger API',
 			version: '0.1.0',
 		},
+		security: [{ ApiKeyAuth: [] }],
 		components: {
 			securitySchemes: {
 				auth: {
 					type: 'http',
 					bearerFormat: 'JWT',
 					scheme: 'bearer',
+				},
+				ApiKeyAuth: {
+					type: 'apiKey',
+					in: 'header',
+					name: 'x-api-key',
 				},
 			},
 		},
