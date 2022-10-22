@@ -58,6 +58,14 @@
 		<picture id="splash">
 			<img class="center" width="50%" src="splash/img/light-1x.png" />
 		</picture>
+		<script type="text/javascript">
+			let useHtml = false;
+			if (useHtml) {
+				window.flutterWebRenderer = 'html';
+			} else {
+				window.flutterWebRenderer = 'canvaskit';
+			}
+		</script>
 		<script>
 			window.addEventListener('load', function (ev) {
 				console.log('CALLED FLUTTER FIRST FRAME');
